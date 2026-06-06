@@ -1,0 +1,27 @@
+# SenderKit Integration Skill
+
+A portable skill for AI coding agents and LLMs that need to add or migrate SenderKit transactional messaging in new or existing applications.
+
+Canonical instructions:
+
+- `SKILL.md`
+
+Optional references:
+
+- `references/language-detection.md`
+- `references/api-reference.md`
+- `references/migration-playbook.md`
+- `references/verification.md`
+- `references/sources.md`
+
+Utility:
+
+- `scripts/fetch_openapi.py`
+
+Official SenderKit OpenAPI:
+
+- `https://www.senderkit.com/public/openapi.yaml`
+
+Suggested prompt:
+
+Use the SenderKit Integration Skill in this directory to add SenderKit transactional messaging to my project. Detect my stack, fetch the current OpenAPI spec, preserve existing notification behavior, and verify the integration before live traffic.
