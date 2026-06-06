@@ -2,7 +2,7 @@
 
 Portable AI-agent instructions for adding or migrating SenderKit transactional messaging in real applications.
 
-This skill helps coding assistants integrate SenderKit into new projects and existing codebases that already use providers such as Resend, SendGrid, Postmark, Mailgun, SES, SMTP, Twilio, FCM, APNs, or Expo. It is designed to work with Codex, Claude, Cursor-style agents, and generic LLM coding assistants that can read local files.
+This open-source skill lives in the [`senderkit/senderkit-skills`](https://github.com/senderkit/senderkit-skills) GitHub repository under `integration/`. It helps coding assistants integrate SenderKit into new projects and existing codebases that already use providers such as Resend, SendGrid, Postmark, Mailgun, SES, SMTP, Twilio, FCM, APNs, or Expo. It is designed to work with Codex, Claude, Cursor-style agents, and generic LLM coding assistants that can read local files.
 
 ## What it does
 
@@ -15,29 +15,38 @@ This skill helps coding assistants integrate SenderKit into new projects and exi
 ## Contents
 
 ```text
-senderkit-integration/
-|-- README.md
-|-- SKILL.md
-|-- AGENTS.md
-|-- llms.txt
-|-- agents/openai.yaml
-|-- references/
-|   |-- api-reference.md
-|   |-- language-detection.md
-|   |-- migration-playbook.md
-|   |-- sources.md
-|   `-- verification.md
-`-- scripts/
-    `-- fetch_openapi.py
+senderkit-skills/
+|-- LICENSE
+`-- integration/
+    |-- AGENTS.md
+    |-- README.md
+    |-- SKILL.md
+    |-- agents/
+    |   `-- openai.yaml
+    |-- llms.txt
+    |-- references/
+    |   |-- api-reference.md
+    |   |-- language-detection.md
+    |   |-- migration-playbook.md
+    |   |-- sources.md
+    |   `-- verification.md
+    `-- scripts/
+        `-- fetch_openapi.py
 ```
 
 ## Use with coding agents
+
+Reuse from GitHub:
+
+```bash
+git clone https://github.com/senderkit/senderkit-skills.git
+```
 
 Codex / OpenAI-compatible skill loaders:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R senderkit-integration ~/.codex/skills/
+cp -R senderkit-skills/integration ~/.codex/skills/senderkit-integration
 ```
 
 Prompt:
@@ -48,11 +57,11 @@ Use $senderkit-integration to add SenderKit transactional messaging to this proj
 
 Claude / Anthropic-style skills:
 
-Package or install the `senderkit-integration` folder as a skill. `SKILL.md` is the canonical instruction file.
+Package or install the `integration/` folder as a skill. `SKILL.md` is the canonical instruction file, and the skill name declared there is `senderkit-integration`.
 
 Cursor, Windsurf, Aider, Continue, and generic coding agents:
 
-Add the folder to your repository or agent context and ask the assistant to read `AGENTS.md` or `SKILL.md` before making changes.
+Add `senderkit-skills/integration/` to your repository or agent context and ask the assistant to read `AGENTS.md` or `SKILL.md` before making changes.
 
 Generic LLMs:
 
@@ -61,6 +70,8 @@ Attach or paste `SKILL.md` first. Add only the relevant reference files for the 
 ## Keep the API current
 
 The skill does not bundle a frozen SenderKit API schema. It fetches the official OpenAPI spec:
+
+From inside `integration/`:
 
 ```bash
 python3 scripts/fetch_openapi.py
@@ -72,15 +83,21 @@ To compare a local app repo copy:
 python3 scripts/fetch_openapi.py --compare public/openapi.yaml
 ```
 
-Use this in CI or a scheduled check if the skill is published separately from the SenderKit app.
+From the GitHub repository root:
 
-## Publishing
+```bash
+python3 integration/scripts/fetch_openapi.py
+```
 
-Before publishing:
+## Reuse and distribution
 
-- Choose an open-source license. MIT is simple and permissive; Apache-2.0 adds an explicit patent grant.
-- Keep `SKILL.md`, `AGENTS.md`, `llms.txt`, `references/`, and `scripts/` in the repo.
-- Run the skill validator and OpenAPI fetch helper.
+This repository is open source under the MIT license. Reuse the `integration/` directory as the portable skill package, or vendor that directory into an agent-specific skills folder.
+
+When redistributing or vendoring the skill:
+
+- Keep `SKILL.md`, `AGENTS.md`, `llms.txt`, `agents/openai.yaml`, `references/`, and `scripts/` together.
+- Preserve the MIT license from the repository.
+- Run the skill validator for your target agent and the OpenAPI fetch helper after changes.
 
 Suggested skill description:
 

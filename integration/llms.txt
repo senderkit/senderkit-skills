@@ -1,6 +1,14 @@
 # SenderKit Integration Skill
 
-A portable skill for AI coding agents and LLMs that need to add or migrate SenderKit transactional messaging in new or existing applications.
+A portable, open-source skill for AI coding agents and LLMs that need to add or migrate SenderKit transactional messaging in new or existing applications.
+
+Canonical GitHub source:
+
+- `https://github.com/senderkit/senderkit-skills`
+
+Reusable skill folder:
+
+- `integration/`
 
 Canonical instructions:
 

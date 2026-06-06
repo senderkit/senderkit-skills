@@ -16,8 +16,10 @@ Use this before finalizing a SenderKit integration.
 Fetch the current OpenAPI contract first:
 
 ```bash
-python3 .agents/skills/senderkit-integration/scripts/fetch_openapi.py
+python3 <skill-dir>/scripts/fetch_openapi.py
 ```
+
+When running from the open-source GitHub checkout, use `python3 integration/scripts/fetch_openapi.py`.
 
 Run or implement equivalents for:
 

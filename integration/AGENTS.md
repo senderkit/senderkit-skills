@@ -1,6 +1,6 @@
 # SenderKit Integration Skill
 
-This directory contains a portable agent skill for integrating SenderKit into applications.
+This directory contains a portable, open-source agent skill for integrating SenderKit into applications. The canonical source is `https://github.com/senderkit/senderkit-skills`, and this reusable skill lives in the repository's `integration/` directory.
 
 For any coding assistant or LLM:
 

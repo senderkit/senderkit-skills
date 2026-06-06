@@ -13,13 +13,19 @@ Fetch that spec before implementing direct REST calls, writing examples, or gene
 From a project using this skill:
 
 ```bash
-python3 .agents/skills/senderkit-integration/scripts/fetch_openapi.py
+python3 <skill-dir>/scripts/fetch_openapi.py
+```
+
+From the open-source GitHub checkout:
+
+```bash
+python3 integration/scripts/fetch_openapi.py
 ```
 
 Inside the SenderKit app repo, compare the published spec with the checked-in copy:
 
 ```bash
-python3 .agents/skills/senderkit-integration/scripts/fetch_openapi.py --compare public/openapi.yaml
+python3 <skill-dir>/scripts/fetch_openapi.py --compare public/openapi.yaml
 ```
 
 If this skill is installed outside the repo, adjust the script path to the installed skill directory.
