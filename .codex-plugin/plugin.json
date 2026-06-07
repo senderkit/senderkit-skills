@@ -11,6 +11,7 @@
   "license": "MIT",
   "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk"],
   "skills": "./skills/",
+  "mcpServers": ".codex-plugin/mcp.json",
   "interface": {
     "displayName": "SenderKit",
     "shortDescription": "Send email, SMS & push notifications.",

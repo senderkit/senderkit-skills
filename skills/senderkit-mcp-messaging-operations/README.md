@@ -54,29 +54,21 @@ Install the `senderkit` plugin from this repository, or package `skills/senderki
 
 ## Connecting the SenderKit MCP server
 
-Installing the `senderkit` plugin in Claude Code auto-configures the MCP server from the
-repository's `.mcp.json`. On first use, run `/mcp` and sign in — Claude Code drives the OAuth
-flow against SenderKit, and you pick a workspace and test/live mode. No API key is stored in the
-repo. **OAuth is the default and recommended path.**
+Installing the `senderkit` plugin auto-configures the MCP server, so the `senderkit_*` tools are
+available without a separate setup step. The auth path differs per client:
 
-If your client cannot use OAuth (headless, CI, or a key-preferring setup), use an API key
-instead. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode) and add the
-`Authorization` header:
+- **Claude Code** — uses the repo's `.mcp.json` (`https://mcp.senderkit.com`, no key). On first
+  use run `/mcp` and sign in; Claude Code drives the **OAuth** flow and you pick a workspace and
+  test/live mode. No secret is stored in the repo. This is the default and recommended path.
+- **Cursor** — the `.cursor-plugin/plugin.json` manifest bundles the server with an **API key**.
+  Set `SENDERKIT_API_KEY` in your environment (the `sk_live_` / `sk_test_` prefix selects mode);
+  Cursor expands it into the `Authorization: Bearer ${SENDERKIT_API_KEY}` header.
+- **Codex** — the `.codex-plugin/plugin.json` manifest points `mcpServers` at
+  `.codex-plugin/mcp.json`, which uses **`bearer_token_env_var: "SENDERKIT_API_KEY"`** — Codex
+  reads that env var and sends it as a bearer token. Set `SENDERKIT_API_KEY` before launching.
 
-```json
-{
-  "mcpServers": {
-    "senderkit": {
-      "type": "http",
-      "url": "https://mcp.senderkit.com",
-      "headers": { "Authorization": "Bearer ${SENDERKIT_API_KEY}" }
-    }
-  }
-}
-```
-
-For Cursor, Codex, Windsurf, VS Code, Zed, and Claude Desktop, the easiest path is the SenderKit
-CLI, which writes the correct config per client:
+Prefer to wire it up manually, or use another client (Windsurf, VS Code, Zed, Claude Desktop)?
+The SenderKit CLI writes the correct config per client:
 
 ```bash
 senderkit mcp install --client cursor   # or codex, claude-code, vscode, zed, all

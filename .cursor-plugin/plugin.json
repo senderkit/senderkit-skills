@@ -12,5 +12,13 @@
   "category": "developer-tools",
   "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk"],
   "tags": ["email", "sms", "push", "web push", "transactional email", "email api", "notifications", "otp", "magic link", "password reset", "send email", "resend alternative", "sendgrid alternative", "twilio alternative", "no vendor lock-in", "mcp"],
-  "skills": "./skills/"
+  "skills": "./skills/",
+  "mcpServers": {
+    "senderkit": {
+      "url": "https://mcp.senderkit.com",
+      "headers": {
+        "Authorization": "Bearer ${SENDERKIT_API_KEY}"
+      }
+    }
+  }
 }

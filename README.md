@@ -50,9 +50,12 @@ For Codex or Cursor, install this repository using the platform's plugin flow. T
 
 ### Connect the SenderKit MCP server
 
-Installing the plugin in Claude Code also auto-configures the SenderKit MCP server from this repo's `.mcp.json`. Run `/mcp`, sign in when prompted, and pick a workspace and test/live mode — **OAuth is the default and no API key is stored in the repo**.
+Installing the plugin auto-configures the SenderKit MCP server so the `senderkit_*` tools work right away. The auth path depends on the client:
 
-Prefer an API key (headless/CI), or using another client? See [`skills/senderkit-mcp-messaging-operations/README.md`](skills/senderkit-mcp-messaging-operations/README.md#connecting-the-senderkit-mcp-server) and [`https://docs.senderkit.com/mcp/installation`](https://docs.senderkit.com/mcp/installation). The SenderKit CLI can also write the config for you: `senderkit mcp install --client cursor` (or `codex`, `claude-code`, `vscode`, `zed`, `all`).
+- **Claude Code** — uses this repo's `.mcp.json`. Run `/mcp`, sign in, and pick a workspace and test/live mode. **OAuth by default; no API key is stored in the repo.**
+- **Cursor / Codex** — bundled with an **API key**. Set `SENDERKIT_API_KEY` in your environment (the `sk_live_` / `sk_test_` prefix selects mode) before launching.
+
+Details and other clients (Windsurf, VS Code, Zed, Claude Desktop): see [`skills/senderkit-mcp-messaging-operations/README.md`](skills/senderkit-mcp-messaging-operations/README.md#connecting-the-senderkit-mcp-server) and [`https://docs.senderkit.com/mcp/installation`](https://docs.senderkit.com/mcp/installation). The SenderKit CLI can also write the config for you: `senderkit mcp install --client cursor` (or `codex`, `claude-code`, `vscode`, `zed`, `all`).
 
 ## Skills
 
@@ -96,6 +99,7 @@ senderkit-skills/
 |   |-- marketplace.json
 |   `-- plugin.json
 |-- .codex-plugin/
+|   |-- mcp.json
 |   `-- plugin.json
 |-- .cursor-plugin/
 |   |-- marketplace.json
