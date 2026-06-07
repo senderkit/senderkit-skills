@@ -3,13 +3,6 @@
   "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
   "version": "0.1.0",
   "skills": "./skills/",
-  "author": {
-    "name": "SenderKit",
-    "url": "https://www.senderkit.com"
-  },
-  "homepage": "https://docs.senderkit.com",
-  "repository": "https://github.com/senderkit/senderkit-skills",
-  "license": "MIT",
   "keywords": ["senderkit", "transactional-messaging", "email", "sms", "push", "mcp"],
   "interface": {
     "displayName": "SenderKit",
@@ -17,7 +10,7 @@
     "longDescription": "SenderKit provides agent skills for adding transactional messaging to applications and safely using SenderKit MCP tools for sends, templates, status checks, and pending-message cancellation.",
     "developerName": "SenderKit",
     "category": "Productivity",
-    "capabilities": [],
+    "websiteURL": "https://www.senderkit.com",
     "defaultPrompt": "Use SenderKit to add transactional messaging to this project."
   }
 }

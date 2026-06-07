@@ -1,0 +1,10 @@
+# OS / editor noise
+.DS_Store
+*.swp
+
+# Tooling
+.firecrawl/
+
+# Fetched artifacts (the OpenAPI spec is fetched at runtime, never committed here)
+senderkit-openapi.yaml
+/tmp/senderkit-openapi.yaml

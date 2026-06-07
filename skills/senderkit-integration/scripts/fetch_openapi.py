@@ -12,7 +12,7 @@ import urllib.error
 import urllib.request
 
 
-DEFAULT_URL = "https://www.senderkit.com/public/openapi.yaml"
+DEFAULT_URL = "https://www.senderkit.com/openapi.yaml"
 
 
 def sha256(data: bytes) -> str:

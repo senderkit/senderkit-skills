@@ -9,10 +9,11 @@ For any coding assistant or LLM:
 3. Load reference files only when relevant:
    - `references/language-detection.md`
    - `references/api-reference.md`
+   - `references/examples.md`
    - `references/migration-playbook.md`
    - `references/verification.md`
 4. Fetch the current SenderKit OpenAPI spec before writing REST request shapes:
-   - `https://www.senderkit.com/public/openapi.yaml`
+   - `https://www.senderkit.com/openapi.yaml`
 5. Use `scripts/fetch_openapi.py` when a local sync or drift check is needed.
 
 Do not treat bundled reference notes as a frozen API specification. The published OpenAPI document is the source of truth.

@@ -3,7 +3,6 @@
   "displayName": "SenderKit",
   "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
   "version": "0.1.0",
-  "skills": "./skills/",
   "author": {
     "name": "SenderKit",
     "url": "https://www.senderkit.com"

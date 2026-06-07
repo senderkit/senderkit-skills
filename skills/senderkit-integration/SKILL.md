@@ -15,14 +15,14 @@ Use this open-source skill to add SenderKit to an application with minimal disru
    - Read `references/language-detection.md` when the stack or provider is not obvious.
 
 2. Load the current API contract.
-   - Fetch `https://www.senderkit.com/public/openapi.yaml` before writing API request shapes.
-   - If working inside the SenderKit repo, compare it with `public/openapi.yaml` by running `python3 references/../scripts/fetch_openapi.py --compare public/openapi.yaml`.
+   - Fetch `https://www.senderkit.com/openapi.yaml` before writing API request shapes.
+   - If working inside the SenderKit repo, compare it with the checked-in copy by running `python3 scripts/fetch_openapi.py --compare public/openapi.yaml`.
    - If network access is unavailable, use the repo's `public/openapi.yaml` when present and clearly note that the live contract was not checked.
 
 3. Choose the integration path.
    - Use an official SenderKit SDK when the current docs or package manifests confirm one for the stack.
-   - For JavaScript/TypeScript, verify the current package name before installing. Local SenderKit docs may show `@senderkit/sdk`; public examples may show `@senderkit/node`.
-   - For any other language, or when SDK availability is uncertain, use the REST API directly.
+   - For JavaScript/TypeScript, the official package is `@senderkit/sdk` (`import { SenderKit } from "@senderkit/sdk"`). Confirm the current version on npm before installing; if docs and package metadata disagree, fall back to the REST API.
+   - For any other language, or when SDK availability is uncertain, use the REST API directly. See `references/examples.md` for ready-to-adapt REST snippets.
    - Keep the old provider until parity is verified; do not remove working delivery code as the first step.
 
 4. Implement a local SenderKit boundary.
@@ -46,7 +46,7 @@ Use this open-source skill to add SenderKit to an application with minimal disru
 
 - Open-source skill repository: `https://github.com/senderkit/senderkit-skills`
 - Reusable skill folder in that repository: `skills/senderkit-integration/`
-- Official OpenAPI: `https://www.senderkit.com/public/openapi.yaml`
+- Official OpenAPI: `https://www.senderkit.com/openapi.yaml`
 - Treat the OpenAPI file as source of truth for endpoints, schemas, request examples, and error responses.
 - Use static notes in this skill only as integration guidance, not as a replacement for the current spec.
 
@@ -64,6 +64,7 @@ skills/senderkit-integration/
 |-- llms.txt
 |-- references/
 |   |-- api-reference.md
+|   |-- examples.md
 |   |-- language-detection.md
 |   |-- migration-playbook.md
 |   |-- sources.md
@@ -76,6 +77,7 @@ skills/senderkit-integration/
 
 - `references/language-detection.md` - Detect project language, framework, package manager, and existing providers.
 - `references/api-reference.md` - How to fetch/read the current OpenAPI contract and apply it safely.
+- `references/examples.md` - Ready-to-adapt REST snippets (curl, TypeScript, Python, PHP, Ruby, Go) for a template send and a status read.
 - `references/migration-playbook.md` - Provider migration strategy and mapping from common email/SMS/push systems.
 - `references/verification.md` - Test, rollout, and production-safety checklist.
 - `references/sources.md` - Source notes used to build this skill.

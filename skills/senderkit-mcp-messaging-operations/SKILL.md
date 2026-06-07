@@ -7,6 +7,14 @@ description: Safely operate SenderKit through its MCP connector. Use when a user
 
 Use this skill when SenderKit is connected as an MCP server and the user wants you to operate SenderKit through tool calls. The documented MCP surface is intentionally small: tools only, prefixed with `senderkit_`.
 
+## Source of truth and drift
+
+The connected MCP server's advertised tool list is the runtime source of truth, not this document.
+
+- The tool map below mirrors the published surface at `https://docs.senderkit.com/mcp/tools` (eight tools). Treat that page as canonical when the two disagree, and prefer the live tool list over both.
+- If the connected server advertises an additional `senderkit_*` tool that is not listed here, you may use it after reading its tool schema. Do not assume a tool exists because it appears here; if a listed tool is absent at runtime, skip it and tell the user.
+- Newer or preview servers may expose template-mutation tools (for example `senderkit_templates_create` or `senderkit_templates_regenerate`) that are not part of the documented public surface. Use them only when the connected server actually advertises them and the user's request authorizes the change.
+
 ## Required workflow
 
 1. Check context before acting.
@@ -58,7 +66,7 @@ Use this skill when SenderKit is connected as an MCP server and the user wants y
 
 ## Boundaries
 
-Do not claim the SenderKit MCP connector can create, edit, render, or publish templates unless those MCP tools are present. Do not claim MCP support for webhooks, suppressions, contacts, campaigns, analytics, provider setup, or domain configuration unless the active MCP server exposes tools for those operations.
+The documented surface is read-and-send only: it cannot create, edit, render, or publish templates. Do not claim those capabilities unless the connected server actually advertises a matching tool (see "Source of truth and drift"). Do not claim MCP support for webhooks, suppressions, contacts, campaigns, analytics, provider setup, or domain configuration unless the active MCP server exposes tools for those operations.
 
 When a user asks for an unsupported operation, explain the supported MCP alternatives: inspect templates, send templated or raw messages, inspect message history, or cancel pending messages.
 

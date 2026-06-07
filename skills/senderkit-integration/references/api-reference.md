@@ -3,7 +3,7 @@
 Do not treat this file as a frozen API reference. SenderKit's current REST contract is published as OpenAPI at:
 
 ```text
-https://www.senderkit.com/public/openapi.yaml
+https://www.senderkit.com/openapi.yaml
 ```
 
 Fetch that spec before implementing direct REST calls, writing examples, or generating clients. Use this file to remember how to consume the live contract safely.

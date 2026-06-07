@@ -32,4 +32,6 @@ Do not treat the bundled reference notes as a frozen API specification. Fetch th
 - Keep each `SKILL.md` trigger-oriented and concise.
 - Keep supporting references inside the relevant skill directory.
 - Preserve complete skill directories when moving or vendoring.
-- Keep `.claude-plugin/`, `.codex-plugin/`, and `.cursor-plugin/` metadata aligned when changing plugin name, version, description, license, repository, or keywords.
+- Keep shared metadata (name, version, description, keywords) consistent across `.claude-plugin/`, `.codex-plugin/`, and `.cursor-plugin/` when it changes.
+- Respect each platform's schema; they are not identical. Notably: Claude auto-discovers `skills/` (no `skills` field needed); Codex ignores `author`/`homepage`/`repository`/`license` and surfaces author/links via its `interface` block; Cursor's `author` takes `name`/`email` (not `url`).
+- Run `python3 scripts/validate.py` after editing manifests or skill frontmatter (CI runs the same check).
