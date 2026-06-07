@@ -21,6 +21,11 @@ to apply.
 - [senderkit-mcp-messaging-operations](skills/senderkit-mcp-messaging-operations/SKILL.md):
   Operate SenderKit at runtime through MCP tools (`senderkit_*`) — send test/live messages,
   look up/draft templates, check delivery status, debug failed sends, and cancel pending sends.
+- [senderkit-email-deliverability](skills/senderkit-email-deliverability/SKILL.md): Diagnose,
+  generate, and verify email domain authentication (SPF, DKIM, DMARC, MX, alignment) so
+  transactional email lands in the inbox instead of spam. Reads current DNS with standard
+  tools, generates the exact records to add, and verifies them — direct-send or routed
+  through a provider.
 
 ## Setup
 

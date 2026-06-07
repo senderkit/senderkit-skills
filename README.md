@@ -4,10 +4,11 @@
 
 SenderKit sends email, SMS, push, and web-push directly, and can also route through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo — so your app isn't locked into one vendor. These skills let an agent wire SenderKit into your codebase and operate it at runtime over MCP.
 
-This repository contains one `senderkit` plugin with two related skills:
+This repository contains one `senderkit` plugin with three related skills:
 
 - `senderkit-integration` - add SenderKit to an app, or replace/route an existing email, SMS, or push provider through it.
 - `senderkit-mcp-messaging-operations` - send and inspect messages at runtime through the SenderKit MCP connector.
+- `senderkit-email-deliverability` - authenticate a sending domain (SPF/DKIM/DMARC) so email reaches the inbox.
 
 ## What can I ask?
 
@@ -22,6 +23,7 @@ You don't need to name SenderKit — these skills activate on everyday messaging
 | "Switch my email provider to SenderKit (or route through it, no lock-in)" | `senderkit-integration` |
 | "Send a test email and check its delivery status" | `senderkit-mcp-messaging-operations` |
 | "Why did this message fail? Cancel that scheduled send" | `senderkit-mcp-messaging-operations` |
+| "Why are my emails going to spam? Set up DKIM/SPF/DMARC" | `senderkit-email-deliverability` |
 
 Rule of thumb: **integration** writes SenderKit into your code; **messaging operations** sends and inspects messages at runtime via MCP.
 
@@ -126,6 +128,22 @@ Claude Code plugin command:
 /senderkit:senderkit-mcp-messaging-operations
 ```
 
+### SenderKit Email Deliverability
+
+Use `senderkit-email-deliverability` when transactional email needs to be authenticated to reach the inbox: diagnose current SPF/DKIM/DMARC with `dig`, generate the exact records to add, point to the SenderKit dashboard for issued values, and verify publication.
+
+Suggested prompt:
+
+```text
+Use $senderkit-email-deliverability to diagnose and fix SPF, DKIM, and DMARC for my sending domain.
+```
+
+Claude Code plugin command:
+
+```text
+/senderkit:senderkit-email-deliverability
+```
+
 ## Repository layout
 
 ```text
@@ -145,6 +163,7 @@ senderkit-skills/
 |-- README.md
 |-- llms.txt
 `-- skills/
+    |-- senderkit-email-deliverability/
     |-- senderkit-integration/
     `-- senderkit-mcp-messaging-operations/
 ```
