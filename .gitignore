@@ -2,9 +2,8 @@
 .DS_Store
 *.swp
 
-# Tooling
+# Firecrawl tooling
 .firecrawl/
 
-# Fetched artifacts (the OpenAPI spec is fetched at runtime, never committed here)
+# The OpenAPI spec is fetched at runtime, never committed here
 senderkit-openapi.yaml
-/tmp/senderkit-openapi.yaml

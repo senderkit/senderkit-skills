@@ -30,6 +30,8 @@ Supported MCP tools:
 - `senderkit_send_raw`
 - `senderkit_templates_list`
 - `senderkit_templates_get`
+- `senderkit_templates_create`
+- `senderkit_templates_regenerate`
 - `senderkit_messages_list`
 - `senderkit_messages_get`
 - `senderkit_cancel_message`
