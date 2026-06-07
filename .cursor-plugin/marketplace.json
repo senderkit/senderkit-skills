@@ -4,13 +4,13 @@
     "name": "SenderKit"
   },
   "metadata": {
-    "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP."
+    "description": "Add and operate transactional email, SMS, push, and web-push notifications with SenderKit — welcome emails, password resets, OTP, magic links, receipts, and notification systems. Sends directly or routes through providers like Resend, SendGrid, Postmark, and Twilio (no vendor lock-in), in code or via MCP."
   },
   "plugins": [
     {
       "name": "senderkit",
       "source": ".",
-      "description": "Integrate SenderKit transactional messaging into apps and operate SenderKit over MCP."
+      "description": "Add transactional email, SMS, push, and web-push (welcome emails, password resets, OTP, magic links, notifications) with SenderKit — sends directly or routes through Resend, SendGrid, Postmark, Twilio (no lock-in), in code or via MCP."
     }
   ]
 }

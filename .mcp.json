@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "senderkit": {
+      "type": "http",
+      "url": "https://mcp.senderkit.com"
+    }
+  }
+}

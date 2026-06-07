@@ -1,7 +1,7 @@
 {
   "name": "senderkit",
   "displayName": "SenderKit",
-  "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
+  "description": "Add and operate transactional email, SMS, push, and web-push notifications with SenderKit — welcome emails, password resets, OTP and verification codes, magic links, receipts, and notification systems. SenderKit sends directly or routes through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo, so apps aren't locked into one vendor. Works in code (SDK/REST) and at runtime via MCP.",
   "version": "0.1.0",
   "author": {
     "name": "SenderKit"
@@ -10,7 +10,7 @@
   "repository": "https://github.com/senderkit/senderkit-skills",
   "license": "MIT",
   "category": "developer-tools",
-  "keywords": ["senderkit", "transactional-messaging", "email", "sms", "push", "mcp"],
-  "tags": ["email", "sms", "push", "transactional", "messaging", "mcp"],
+  "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk"],
+  "tags": ["email", "sms", "push", "web push", "transactional email", "email api", "notifications", "otp", "magic link", "password reset", "send email", "resend alternative", "sendgrid alternative", "twilio alternative", "no vendor lock-in", "mcp"],
   "skills": "./skills/"
 }

@@ -1,7 +1,7 @@
 {
   "name": "senderkit",
   "version": "0.1.0",
-  "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
+  "description": "Add and operate transactional email, SMS, push, and web-push notifications with SenderKit — welcome emails, password resets, OTP and verification codes, magic links, receipts, and notification systems. SenderKit sends directly or routes through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo, so apps aren't locked into one vendor. Works in code (SDK/REST) and at runtime via MCP.",
   "author": {
     "name": "SenderKit",
     "url": "https://www.senderkit.com"
@@ -9,20 +9,20 @@
   "homepage": "https://docs.senderkit.com",
   "repository": "https://github.com/senderkit/senderkit-skills",
   "license": "MIT",
-  "keywords": ["senderkit", "transactional-messaging", "email", "sms", "push", "mcp"],
+  "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk"],
   "skills": "./skills/",
   "interface": {
     "displayName": "SenderKit",
-    "shortDescription": "Integrate and operate SenderKit messaging.",
-    "longDescription": "SenderKit provides agent skills for adding transactional messaging to applications and safely using SenderKit MCP tools for sends, templates, status checks, and pending-message cancellation.",
+    "shortDescription": "Send email, SMS & push notifications.",
+    "longDescription": "Add and operate transactional email, SMS, push, and web-push with SenderKit: welcome emails, password resets, OTP/verification codes, magic links, receipts, and notification systems. SenderKit sends directly or routes through providers like Resend, SendGrid, Postmark, Twilio, FCM, APNs, and Expo (no vendor lock-in). The integration skill wires SenderKit into your codebase; the MCP skill sends and inspects messages at runtime through SenderKit MCP tools.",
     "developerName": "SenderKit",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://www.senderkit.com",
     "defaultPrompt": [
-      "Add SenderKit transactional messaging to this project.",
-      "Migrate my email provider to SenderKit.",
-      "Send a test message and check its status via SenderKit MCP."
+      "Add a welcome email when a user signs up.",
+      "Set up SMS OTP / verification codes in this app.",
+      "Send a test email and check its status via SenderKit MCP."
     ]
   }
 }

@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "senderkit-skills",
   "metadata": {
-    "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP."
+    "description": "Add and operate transactional email, SMS, push, and web-push notifications with SenderKit — welcome emails, password resets, OTP, magic links, receipts, and notification systems. Sends directly or routes through providers like Resend, SendGrid, Postmark, and Twilio (no vendor lock-in), in code or via MCP."
   },
   "owner": {
     "name": "SenderKit"
@@ -12,7 +12,7 @@
       "name": "senderkit",
       "displayName": "SenderKit",
       "source": "./",
-      "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
+      "description": "Add and operate transactional email, SMS, push, and web-push notifications with SenderKit — welcome emails, password resets, OTP, magic links, receipts, and notification systems. Sends directly or routes through providers like Resend, SendGrid, Postmark, and Twilio (no vendor lock-in), in code or via MCP.",
       "category": "developer-tools"
     }
   ]

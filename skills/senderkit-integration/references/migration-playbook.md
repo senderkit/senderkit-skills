@@ -2,6 +2,13 @@
 
 Use this when replacing or augmenting an existing provider.
 
+Two valid end states — confirm which one the user wants before rewiring:
+
+- **Replace** the current provider: SenderKit becomes the sender and the old provider is removed once parity is verified.
+- **Route through** SenderKit: the app sends via SenderKit, which can deliver directly or through the existing provider, so the team keeps their provider relationship but removes single-vendor lock-in and gets one unified send/template/status surface.
+
+Either way, the code-side change is the same — move send call sites behind a single SenderKit boundary. The mapping rules and rollout steps below apply to both.
+
 ## Inventory first
 
 Create a quick table before changing code:

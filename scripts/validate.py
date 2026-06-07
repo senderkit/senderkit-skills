@@ -153,6 +153,27 @@ if cmp_.exists():
                 if e.get("source") == "." and cur_name and e.get("name") != cur_name:
                     errors.append(f".cursor-plugin/marketplace.json: entry name `{e.get('name')}` must match plugin.json name `{cur_name}`")
 
+# Bundled MCP server config (optional). When present it auto-configures the
+# SenderKit MCP server on plugin install, so keep it parseable and well-formed.
+mcp_path = ROOT / ".mcp.json"
+if mcp_path.exists():
+    try:
+        mcp = json.loads(mcp_path.read_text())
+    except json.JSONDecodeError as exc:
+        errors.append(f".mcp.json: invalid JSON ({exc})")
+    else:
+        servers = mcp.get("mcpServers")
+        if not isinstance(servers, dict) or not servers:
+            errors.append(".mcp.json: `mcpServers` must be a non-empty object")
+        else:
+            for sname, scfg in servers.items():
+                if not isinstance(scfg, dict):
+                    errors.append(f".mcp.json: server `{sname}` must be an object")
+                    continue
+                # Remote (url) or local (command) — require one of them.
+                if not scfg.get("url") and not scfg.get("command"):
+                    errors.append(f".mcp.json: server `{sname}` needs a `url` or `command`")
+
 NAME_RE = re.compile(r"^[a-z0-9-]+$")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---", re.DOTALL)
 

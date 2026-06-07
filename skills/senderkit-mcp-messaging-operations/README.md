@@ -52,6 +52,39 @@ Claude / Anthropic-style plugins:
 
 Install the `senderkit` plugin from this repository, or package `skills/senderkit-mcp-messaging-operations/` as a standalone skill. `SKILL.md` is the canonical instruction file, and the skill name declared there is `senderkit-mcp-messaging-operations`.
 
+## Connecting the SenderKit MCP server
+
+Installing the `senderkit` plugin in Claude Code auto-configures the MCP server from the
+repository's `.mcp.json`. On first use, run `/mcp` and sign in — Claude Code drives the OAuth
+flow against SenderKit, and you pick a workspace and test/live mode. No API key is stored in the
+repo. **OAuth is the default and recommended path.**
+
+If your client cannot use OAuth (headless, CI, or a key-preferring setup), use an API key
+instead. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode) and add the
+`Authorization` header:
+
+```json
+{
+  "mcpServers": {
+    "senderkit": {
+      "type": "http",
+      "url": "https://mcp.senderkit.com",
+      "headers": { "Authorization": "Bearer ${SENDERKIT_API_KEY}" }
+    }
+  }
+}
+```
+
+For Cursor, Codex, Windsurf, VS Code, Zed, and Claude Desktop, the easiest path is the SenderKit
+CLI, which writes the correct config per client:
+
+```bash
+senderkit mcp install --client cursor   # or codex, claude-code, vscode, zed, all
+```
+
+A local stdio server (`senderkit mcp`, no network hop) is also available for offline use; see
+`https://docs.senderkit.com/mcp/installation`.
+
 ## MCP scope
 
 This skill is based on the documented SenderKit MCP tools:
@@ -61,11 +94,13 @@ This skill is based on the documented SenderKit MCP tools:
 - `senderkit_send_raw`
 - `senderkit_templates_list`
 - `senderkit_templates_get`
+- `senderkit_templates_create`
+- `senderkit_templates_regenerate`
 - `senderkit_messages_list`
 - `senderkit_messages_get`
 - `senderkit_cancel_message`
 
-It does not assume MCP support for template mutation, webhook management, suppressions, contacts, campaigns, analytics, provider setup, or domain configuration.
+It can author **draft** templates (`senderkit_templates_create`, `senderkit_templates_regenerate`) but does not assume MCP support for publishing templates, editing published versions, rendering, webhook management, suppressions, contacts, campaigns, analytics, provider setup, or domain configuration.
 
 Suggested skill description:
 
