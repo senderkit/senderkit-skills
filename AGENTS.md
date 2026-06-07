@@ -33,5 +33,9 @@ Do not treat the bundled reference notes as a frozen API specification. Fetch th
 - Keep supporting references inside the relevant skill directory.
 - Preserve complete skill directories when moving or vendoring.
 - Keep shared metadata (name, version, description, keywords) consistent across `.claude-plugin/`, `.codex-plugin/`, and `.cursor-plugin/` when it changes.
-- Respect each platform's schema; they are not identical. Notably: Claude auto-discovers `skills/` (no `skills` field needed); Codex ignores `author`/`homepage`/`repository`/`license` and surfaces author/links via its `interface` block; Cursor's `author` takes `name`/`email` (not `url`).
+- Respect each platform's schema; they are not identical:
+  - **Claude** auto-discovers `skills/` (no `skills` field needed).
+  - **Codex** (see `https://github.com/openai/codex` → `codex-rs/skills/.../plugin-json-spec.md`) requires `name`, semver `version`, `description`, `author.name`, and an `interface` block with non-empty `displayName`, `shortDescription`, `longDescription`, `developerName`, `category`, a `capabilities` string array, and a `defaultPrompt` (array, ≤3 entries, ≤128 chars each). `author`/`homepage`/`repository`/`license` are valid; `hooks` and any unknown field are rejected. `apps`/`mcpServers` only when `.app.json`/`.mcp.json` exist.
+  - **Cursor** `author` takes `name`/`email` (not `url`).
+- `scripts/validate.py` enforces the Codex required fields; run it (or rely on CI) after editing `.codex-plugin/plugin.json`.
 - Run `python3 scripts/validate.py` after editing manifests or skill frontmatter (CI runs the same check).

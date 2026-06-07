@@ -41,6 +41,37 @@ for rel in MANIFESTS:
     elif not data.get("name"):
         errors.append(f"{rel}: missing `name`")
 
+# Codex manifest contract (subset of openai/codex plugin-json-spec validator).
+SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+].+)?$")
+codex = ROOT / ".codex-plugin" / "plugin.json"
+if codex.exists():
+    try:
+        cx = json.loads(codex.read_text())
+    except json.JSONDecodeError:
+        cx = None
+    if cx is not None:
+        allowed_top = {"id", "name", "version", "description", "skills", "apps",
+                       "mcpServers", "interface", "author", "homepage", "repository",
+                       "license", "keywords"}
+        for k in set(cx) - allowed_top:
+            errors.append(f".codex-plugin/plugin.json: field `{k}` is not accepted (rejects `hooks`/unknown)")
+        if not SEMVER_RE.match(str(cx.get("version", ""))):
+            errors.append(".codex-plugin/plugin.json: `version` must be strict semver")
+        for f in ("name", "description"):
+            if not str(cx.get(f, "")).strip():
+                errors.append(f".codex-plugin/plugin.json: `{f}` must be a non-empty string")
+        if not str((cx.get("author") or {}).get("name", "")).strip():
+            errors.append(".codex-plugin/plugin.json: `author.name` is required")
+        iface = cx.get("interface") or {}
+        for f in ("displayName", "shortDescription", "longDescription", "developerName", "category"):
+            if not str(iface.get(f, "")).strip():
+                errors.append(f".codex-plugin/plugin.json: `interface.{f}` must be a non-empty string")
+        caps = iface.get("capabilities")
+        if not isinstance(caps, list) or not all(isinstance(c, str) and c.strip() for c in caps):
+            errors.append(".codex-plugin/plugin.json: `interface.capabilities` must be a string array")
+        if "defaultPrompt" not in iface and "default_prompt" not in iface:
+            errors.append(".codex-plugin/plugin.json: `interface.defaultPrompt` is required")
+
 NAME_RE = re.compile(r"^[a-z0-9-]+$")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---", re.DOTALL)
 
