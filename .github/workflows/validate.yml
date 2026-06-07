@@ -6,12 +6,35 @@ on:
   pull_request:
 
 jobs:
-  validate:
+  manifests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Validate manifests and skill frontmatter
+      - name: Validate manifests and skill frontmatter (Claude/Codex/Cursor)
         run: python3 scripts/validate.py
+
+  claude-plugin-validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Claude Code CLI
+        run: npm install -g @anthropic-ai/claude-code
+      # `claude plugin validate` is an offline manifest check — no API key needed.
+      - name: Validate marketplace manifest (strict)
+        run: claude plugin validate . --strict
+      - name: Validate plugin manifest + skill components (strict)
+        # The repo root holds both marketplace.json and plugin.json, so the CLI
+        # validates the marketplace there. Mirror just the plugin into an
+        # isolated root so the plugin manifest and its skills are validated too.
+        run: |
+          tmp="$(mktemp -d)"
+          mkdir -p "$tmp/.claude-plugin"
+          cp .claude-plugin/plugin.json "$tmp/.claude-plugin/plugin.json"
+          cp -R skills "$tmp/skills"
+          claude plugin validate "$tmp" --strict
