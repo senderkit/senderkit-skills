@@ -35,12 +35,15 @@ Reuse from GitHub:
 git clone https://github.com/senderkit/senderkit-skills.git
 ```
 
-Codex / OpenAI-compatible skill loaders:
+Codex (OpenAI) discovers skills from `.agents/skills/` directories — user scope (every repo) or a single repo's scope:
 
 ```bash
-mkdir -p ~/.codex/skills
-cp -R senderkit-skills/skills/senderkit-mcp-messaging-operations ~/.codex/skills/senderkit-mcp-messaging-operations
+mkdir -p ~/.agents/skills
+cp -R senderkit-skills/skills/senderkit-mcp-messaging-operations ~/.agents/skills/senderkit-mcp-messaging-operations
+# repo-scoped instead? copy into <your-repo>/.agents/skills/
 ```
+
+Restart Codex so it picks up the skill.
 
 Prompt:
 
