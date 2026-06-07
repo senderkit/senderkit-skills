@@ -4,13 +4,13 @@
     "name": "SenderKit"
   },
   "metadata": {
-    "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP."
+    "description": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push — welcome emails, OTPs, receipts, and more — then create templates, send, and monitor every message your app sends. One messaging layer, no provider lock-in."
   },
   "plugins": [
     {
       "name": "senderkit",
       "source": ".",
-      "description": "Integrate SenderKit transactional messaging into apps and operate SenderKit over MCP."
+      "description": "Add email, SMS, push, and web-push to your app and manage every message from your AI coding agent — one messaging layer, no provider lock-in."
     }
   ]
 }

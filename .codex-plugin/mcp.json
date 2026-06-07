@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "senderkit": {
+      "url": "https://mcp.senderkit.com",
+      "bearer_token_env_var": "SENDERKIT_API_KEY"
+    }
+  }
+}

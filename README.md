@@ -1,11 +1,29 @@
 # SenderKit Skills
 
-Portable AI-agent skills for SenderKit. This repository is packaged as a plugin for Claude Code, OpenAI Codex, Cursor, and other Agent Skills-compatible coding assistants.
+**Add transactional email, SMS, push, and web-push notifications to any app — straight from your AI coding agent.** Portable AI-agent skills for [SenderKit](https://www.senderkit.com), packaged as a plugin for Claude Code, OpenAI Codex, Cursor, and other Agent Skills-compatible coding assistants.
+
+SenderKit sends email, SMS, push, and web-push directly, and can also route through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo — so your app isn't locked into one vendor. These skills let an agent wire SenderKit into your codebase and operate it at runtime over MCP.
 
 This repository contains one `senderkit` plugin with two related skills:
 
-- `senderkit-integration` - add or migrate SenderKit transactional messaging in an application codebase.
-- `senderkit-mcp-messaging-operations` - operate SenderKit through the SenderKit MCP connector.
+- `senderkit-integration` - add SenderKit to an app, or replace/route an existing email, SMS, or push provider through it.
+- `senderkit-mcp-messaging-operations` - send and inspect messages at runtime through the SenderKit MCP connector.
+
+## What can I ask?
+
+You don't need to name SenderKit — these skills activate on everyday messaging requests. Examples:
+
+| You ask | Skill that helps |
+| --- | --- |
+| "Add a welcome email when a user signs up" | `senderkit-integration` |
+| "Set up SMS OTP / verification codes" | `senderkit-integration` |
+| "Add push notifications to this project" | `senderkit-integration` |
+| "Send password-reset and receipt emails" | `senderkit-integration` |
+| "Switch my email provider to SenderKit (or route through it, no lock-in)" | `senderkit-integration` |
+| "Send a test email and check its delivery status" | `senderkit-mcp-messaging-operations` |
+| "Why did this message fail? Cancel that scheduled send" | `senderkit-mcp-messaging-operations` |
+
+Rule of thumb: **integration** writes SenderKit into your code; **messaging operations** sends and inspects messages at runtime via MCP.
 
 ## Plugins
 
@@ -29,6 +47,15 @@ claude --plugin-dir .
 ```
 
 For Codex or Cursor, install this repository using the platform's plugin flow. The authored skills live under `./skills/`.
+
+### Connect the SenderKit MCP server
+
+Installing the plugin auto-configures the SenderKit MCP server so the `senderkit_*` tools work right away. The auth path depends on the client:
+
+- **Claude Code** — uses this repo's `.mcp.json`. Run `/mcp`, sign in, and pick a workspace and test/live mode. **OAuth by default; no API key is stored in the repo.**
+- **Cursor / Codex** — bundled with an **API key**. Set `SENDERKIT_API_KEY` in your environment (the `sk_live_` / `sk_test_` prefix selects mode) before launching.
+
+Details and other clients (Windsurf, VS Code, Zed, Claude Desktop): see [`skills/senderkit-mcp-messaging-operations/README.md`](skills/senderkit-mcp-messaging-operations/README.md#connecting-the-senderkit-mcp-server) and [`https://docs.senderkit.com/mcp/installation`](https://docs.senderkit.com/mcp/installation). The SenderKit CLI can also write the config for you: `senderkit mcp install --client cursor` (or `codex`, `claude-code`, `vscode`, `zed`, `all`).
 
 ## Skills
 
@@ -72,12 +99,16 @@ senderkit-skills/
 |   |-- marketplace.json
 |   `-- plugin.json
 |-- .codex-plugin/
+|   |-- mcp.json
 |   `-- plugin.json
 |-- .cursor-plugin/
+|   |-- marketplace.json
 |   `-- plugin.json
+|-- .mcp.json
 |-- AGENTS.md
 |-- LICENSE
 |-- README.md
+|-- llms.txt
 `-- skills/
     |-- senderkit-integration/
     `-- senderkit-mcp-messaging-operations/

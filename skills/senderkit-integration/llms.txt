@@ -1,6 +1,6 @@
 # SenderKit Integration Skill
 
-A portable, open-source skill for AI coding agents and LLMs that need to add or migrate SenderKit transactional messaging in new or existing applications.
+A portable, open-source skill for AI coding agents and LLMs that need to add transactional email, SMS, push, or web-push notifications to a new or existing application — welcome emails, password resets, OTP/verification codes, magic links, receipts, or notification systems. Adds SenderKit, which sends directly or routes through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo (no vendor lock-in). Use it to add SenderKit, or to replace/route an existing provider through it.
 
 Canonical GitHub source:
 

@@ -1,11 +1,13 @@
 ---
 name: senderkit-mcp-messaging-operations
-description: Safely operate SenderKit through its MCP connector. Use when a user asks Claude or another MCP-capable agent to use SenderKit MCP tools for test/live mode checks, templated sends, raw sends, template lookup, drafting or regenerating templates, message status or delivery debugging, recent message filtering, scheduled send checks, or canceling scheduled or queued messages.
+description: Send and operate transactional messages — email, SMS, push, or web-push — at runtime through the connected SenderKit MCP server. Use whenever the SenderKit MCP tools (senderkit_*) are available and a user wants to actually send a message (a test or live send, a welcome/OTP/notification message), check delivery or message status, debug a failed or stuck send, look up/draft/regenerate templates, filter recent messages, check scheduled sends, or cancel a scheduled or queued message — rather than editing application code (that is the senderkit-integration skill).
 ---
 
 # SenderKit MCP messaging operations
 
 Use this skill when SenderKit is connected as an MCP server and the user wants you to operate SenderKit through tool calls. The documented MCP surface is small and tool-only: ten tools, all prefixed with `senderkit_`.
+
+This skill **operates SenderKit at runtime via MCP** and does not change application code. To add or wire SenderKit into a codebase (SDK/REST integration, migrating a provider), use the `senderkit-integration` skill instead.
 
 ## Source of truth and drift
 

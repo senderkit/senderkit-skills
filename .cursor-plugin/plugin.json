@@ -1,7 +1,7 @@
 {
   "name": "senderkit",
   "displayName": "SenderKit",
-  "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
+  "description": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push — welcome emails, OTPs, receipts, and more — then create templates, send, and monitor every message your app sends. One messaging layer, no provider lock-in.",
   "version": "0.1.0",
   "author": {
     "name": "SenderKit"
@@ -10,7 +10,15 @@
   "repository": "https://github.com/senderkit/senderkit-skills",
   "license": "MIT",
   "category": "developer-tools",
-  "keywords": ["senderkit", "transactional-messaging", "email", "sms", "push", "mcp"],
-  "tags": ["email", "sms", "push", "transactional", "messaging", "mcp"],
-  "skills": "./skills/"
+  "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk"],
+  "tags": ["email", "sms", "push", "web push", "transactional email", "email api", "notifications", "otp", "magic link", "password reset", "send email", "resend alternative", "sendgrid alternative", "twilio alternative", "no vendor lock-in", "mcp"],
+  "skills": "./skills/",
+  "mcpServers": {
+    "senderkit": {
+      "url": "https://mcp.senderkit.com",
+      "headers": {
+        "Authorization": "Bearer ${SENDERKIT_API_KEY}"
+      }
+    }
+  }
 }
