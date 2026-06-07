@@ -1,7 +1,7 @@
 {
   "name": "senderkit",
   "version": "0.1.0",
-  "description": "Add and operate transactional email, SMS, push, and web-push notifications with SenderKit — welcome emails, password resets, OTP and verification codes, magic links, receipts, and notification systems. SenderKit sends directly or routes through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo, so apps aren't locked into one vendor. Works in code (SDK/REST) and at runtime via MCP.",
+  "description": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push to your app — welcome emails, password resets, OTPs, receipts, and notifications — then create templates, send, and monitor every message without leaving your editor. SenderKit delivers on its own or routes through providers like Resend, SendGrid, Postmark, and Twilio, so you're never locked into one.",
   "author": {
     "name": "SenderKit",
     "url": "https://www.senderkit.com"
@@ -14,8 +14,8 @@
   "mcpServers": ".codex-plugin/mcp.json",
   "interface": {
     "displayName": "SenderKit",
-    "shortDescription": "Send email, SMS & push notifications.",
-    "longDescription": "Add and operate transactional email, SMS, push, and web-push with SenderKit: welcome emails, password resets, OTP/verification codes, magic links, receipts, and notification systems. SenderKit sends directly or routes through providers like Resend, SendGrid, Postmark, Twilio, FCM, APNs, and Expo (no vendor lock-in). The integration skill wires SenderKit into your codebase; the MCP skill sends and inspects messages at runtime through SenderKit MCP tools.",
+    "shortDescription": "Send email, SMS & push from your AI agent.",
+    "longDescription": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push to your app — welcome emails, password resets, OTPs, receipts, and notifications — then create templates, send, and monitor every message without leaving your editor. SenderKit delivers on its own or routes through providers like Resend, SendGrid, Postmark, and Twilio, so you're never locked into one. Wire it into your codebase, or just send and inspect messages live over MCP.",
     "developerName": "SenderKit",
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],
