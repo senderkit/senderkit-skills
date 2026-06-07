@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "senderkit",
   "displayName": "SenderKit",
-  "description": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push to your app — welcome emails, password resets, OTPs, receipts, and notifications — then create templates, send, and monitor every message without leaving your editor. SenderKit delivers on its own or routes through providers like Resend, SendGrid, Postmark, and Twilio, so you're never locked into one.",
+  "description": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push — welcome emails, OTPs, receipts, and more — then create templates, send, and monitor every message your app sends. One messaging layer, no provider lock-in.",
   "version": "0.1.0",
   "author": {
     "name": "SenderKit",
