@@ -8,7 +8,7 @@ Canonical GitHub source:
 
 Reusable skill folder:
 
-- `integration/`
+- `skills/senderkit-integration/`
 
 Canonical instructions:
 

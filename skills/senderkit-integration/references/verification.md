@@ -19,7 +19,7 @@ Fetch the current OpenAPI contract first:
 python3 <skill-dir>/scripts/fetch_openapi.py
 ```
 
-When running from the open-source GitHub checkout, use `python3 integration/scripts/fetch_openapi.py`.
+When running from the open-source GitHub checkout, use `python3 skills/senderkit-integration/scripts/fetch_openapi.py`.
 
 Run or implement equivalents for:
 

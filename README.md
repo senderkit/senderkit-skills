@@ -1,11 +1,34 @@
 # SenderKit Skills
 
-Portable AI-agent skills for SenderKit.
+Portable AI-agent skills for SenderKit. This repository is packaged as a plugin for Claude Code, OpenAI Codex, Cursor, and other Agent Skills-compatible coding assistants.
 
-This repository contains two related but distinct skills:
+This repository contains one `senderkit` plugin with two related skills:
 
-- `integration/` - add or migrate SenderKit transactional messaging in an application codebase.
-- `mcp-messaging-operations/` - operate SenderKit through the SenderKit MCP connector.
+- `senderkit-integration` - add or migrate SenderKit transactional messaging in an application codebase.
+- `senderkit-mcp-messaging-operations` - operate SenderKit through the SenderKit MCP connector.
+
+## Plugins
+
+This repo includes metadata for multiple platforms:
+
+- Claude Code: `.claude-plugin/`
+- OpenAI Codex: `.codex-plugin/`
+- Cursor: `.cursor-plugin/`
+
+For Claude Code marketplace installation from GitHub:
+
+```text
+/plugin marketplace add senderkit/senderkit-skills
+/plugin install senderkit@senderkit-skills
+```
+
+For local Claude Code development:
+
+```bash
+claude --plugin-dir .
+```
+
+For Codex or Cursor, install this repository using the platform's plugin flow. The authored skills live under `./skills/`.
 
 ## Skills
 
@@ -19,6 +42,12 @@ Suggested prompt:
 Use $senderkit-integration to add SenderKit transactional messaging to this project.
 ```
 
+Claude Code plugin command:
+
+```text
+/senderkit:senderkit-integration
+```
+
 ### SenderKit MCP Messaging Operations
 
 Use `senderkit-mcp-messaging-operations` when an agent has access to the SenderKit MCP server and needs to send messages, inspect templates, check message status, or cancel pending sends through MCP tool calls.
@@ -29,14 +58,29 @@ Suggested prompt:
 Use $senderkit-mcp-messaging-operations to send a test message and verify its status through SenderKit MCP.
 ```
 
+Claude Code plugin command:
+
+```text
+/senderkit:senderkit-mcp-messaging-operations
+```
+
 ## Repository layout
 
 ```text
 senderkit-skills/
+|-- .claude-plugin/
+|   |-- marketplace.json
+|   `-- plugin.json
+|-- .codex-plugin/
+|   `-- plugin.json
+|-- .cursor-plugin/
+|   `-- plugin.json
+|-- AGENTS.md
 |-- LICENSE
 |-- README.md
-|-- integration/
-`-- mcp-messaging-operations/
+`-- skills/
+    |-- senderkit-integration/
+    `-- senderkit-mcp-messaging-operations/
 ```
 
 ## Official docs

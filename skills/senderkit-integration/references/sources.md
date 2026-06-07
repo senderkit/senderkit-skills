@@ -3,7 +3,7 @@
 This skill was built from:
 
 - SenderKit open-source skills repository: `https://github.com/senderkit/senderkit-skills`
-  - Reusable integration skill folder: `integration/`
+  - Reusable integration skill folder: `skills/senderkit-integration/`
   - License: MIT.
 - SenderKit public site: `https://www.senderkit.com/`
   - Describes SenderKit as a CMS for transactional notifications.

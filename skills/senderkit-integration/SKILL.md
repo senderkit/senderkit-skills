@@ -5,7 +5,7 @@ description: Add or migrate SenderKit transactional messaging in new or existing
 
 # SenderKit integration
 
-Use this open-source skill to add SenderKit to an application with minimal disruption. The reusable source lives at `https://github.com/senderkit/senderkit-skills` in the `integration/` directory, while the skill name remains `senderkit-integration`. Favor codebase-aware integration over generic snippets: detect the stack, find existing notification flows, preserve behavior, and add SenderKit behind a small local wrapper.
+Use this open-source skill to add SenderKit to an application with minimal disruption. The reusable source lives at `https://github.com/senderkit/senderkit-skills` in the `skills/senderkit-integration/` directory, while the skill name remains `senderkit-integration`. Favor codebase-aware integration over generic snippets: detect the stack, find existing notification flows, preserve behavior, and add SenderKit behind a small local wrapper.
 
 ## Workflow
 
@@ -45,17 +45,17 @@ Use this open-source skill to add SenderKit to an application with minimal disru
 ## SenderKit basics
 
 - Open-source skill repository: `https://github.com/senderkit/senderkit-skills`
-- Reusable skill folder in that repository: `integration/`
+- Reusable skill folder in that repository: `skills/senderkit-integration/`
 - Official OpenAPI: `https://www.senderkit.com/public/openapi.yaml`
 - Treat the OpenAPI file as source of truth for endpoints, schemas, request examples, and error responses.
 - Use static notes in this skill only as integration guidance, not as a replacement for the current spec.
 
 ## Folder structure
 
-When reused from GitHub, keep the complete `integration/` directory together:
+When reused from GitHub, keep the complete `skills/senderkit-integration/` directory together:
 
 ```text
-integration/
+skills/senderkit-integration/
 |-- AGENTS.md
 |-- README.md
 |-- SKILL.md

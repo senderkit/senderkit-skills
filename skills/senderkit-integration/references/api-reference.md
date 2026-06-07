@@ -19,7 +19,7 @@ python3 <skill-dir>/scripts/fetch_openapi.py
 From the open-source GitHub checkout:
 
 ```bash
-python3 integration/scripts/fetch_openapi.py
+python3 skills/senderkit-integration/scripts/fetch_openapi.py
 ```
 
 Inside the SenderKit app repo, compare the published spec with the checked-in copy:

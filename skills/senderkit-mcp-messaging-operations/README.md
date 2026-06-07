@@ -2,7 +2,7 @@
 
 Portable AI-agent instructions for using the SenderKit MCP connector safely.
 
-This open-source skill lives in the [`senderkit/senderkit-skills`](https://github.com/senderkit/senderkit-skills) GitHub repository under `mcp-messaging-operations/`. It helps Claude, Codex, Cursor-style agents, and other MCP-capable assistants use SenderKit MCP tools for messaging operations without overclaiming unsupported connector behavior.
+This open-source skill lives in the [`senderkit/senderkit-skills`](https://github.com/senderkit/senderkit-skills) GitHub repository under `skills/senderkit-mcp-messaging-operations/`. It helps Claude, Codex, Cursor-style agents, and other MCP-capable assistants use SenderKit MCP tools for messaging operations without overclaiming unsupported connector behavior.
 
 ## What it does
 
@@ -16,7 +16,7 @@ This open-source skill lives in the [`senderkit/senderkit-skills`](https://githu
 ## Contents
 
 ```text
-mcp-messaging-operations/
+skills/senderkit-mcp-messaging-operations/
 |-- AGENTS.md
 |-- README.md
 |-- SKILL.md
@@ -39,7 +39,7 @@ Codex / OpenAI-compatible skill loaders:
 
 ```bash
 mkdir -p ~/.codex/skills
-cp -R senderkit-skills/mcp-messaging-operations ~/.codex/skills/senderkit-mcp-messaging-operations
+cp -R senderkit-skills/skills/senderkit-mcp-messaging-operations ~/.codex/skills/senderkit-mcp-messaging-operations
 ```
 
 Prompt:
@@ -48,9 +48,9 @@ Prompt:
 Use $senderkit-mcp-messaging-operations to send a test message and verify its status through SenderKit MCP.
 ```
 
-Claude / Anthropic-style skills:
+Claude / Anthropic-style plugins:
 
-Package or install the `mcp-messaging-operations/` folder as a skill. `SKILL.md` is the canonical instruction file, and the skill name declared there is `senderkit-mcp-messaging-operations`.
+Install the `senderkit` plugin from this repository, or package `skills/senderkit-mcp-messaging-operations/` as a standalone skill. `SKILL.md` is the canonical instruction file, and the skill name declared there is `senderkit-mcp-messaging-operations`.
 
 ## MCP scope
 

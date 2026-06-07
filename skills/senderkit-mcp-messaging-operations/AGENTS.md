@@ -1,6 +1,6 @@
 # SenderKit MCP Messaging Operations Skill
 
-This directory contains a portable, open-source agent skill for operating SenderKit through its MCP connector. The canonical source is `https://github.com/senderkit/senderkit-skills`, and this reusable skill lives in the repository's `mcp-messaging-operations/` directory.
+This directory contains a portable, open-source agent skill for operating SenderKit through its MCP connector. The canonical source is `https://github.com/senderkit/senderkit-skills`, and this reusable skill lives in the repository's `skills/senderkit-mcp-messaging-operations/` directory.
 
 For any coding assistant or LLM:
 

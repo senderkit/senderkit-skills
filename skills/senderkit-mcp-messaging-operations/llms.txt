@@ -8,7 +8,7 @@ Canonical GitHub source:
 
 Reusable skill folder:
 
-- `mcp-messaging-operations/`
+- `skills/senderkit-mcp-messaging-operations/`
 
 Canonical instructions:
 
