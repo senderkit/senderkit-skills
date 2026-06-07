@@ -11,5 +11,6 @@
   "license": "MIT",
   "category": "developer-tools",
   "keywords": ["senderkit", "transactional-messaging", "email", "sms", "push", "mcp"],
+  "tags": ["email", "sms", "push", "transactional", "messaging", "mcp"],
   "skills": "./skills/"
 }

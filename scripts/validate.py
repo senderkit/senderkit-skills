@@ -23,6 +23,7 @@ MANIFESTS = [
     ".claude-plugin/marketplace.json",
     ".codex-plugin/plugin.json",
     ".cursor-plugin/plugin.json",
+    ".cursor-plugin/marketplace.json",
 ]
 
 for rel in MANIFESTS:
@@ -71,6 +72,54 @@ if codex.exists():
             errors.append(".codex-plugin/plugin.json: `interface.capabilities` must be a string array")
         if "defaultPrompt" not in iface and "default_prompt" not in iface:
             errors.append(".codex-plugin/plugin.json: `interface.defaultPrompt` is required")
+
+# Cursor manifest contract (subset of cursor/plugins schemas/*.schema.json).
+CURSOR_NAME_RE = re.compile(r"^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
+cur = ROOT / ".cursor-plugin" / "plugin.json"
+cur_name = None
+if cur.exists():
+    try:
+        cp = json.loads(cur.read_text())
+    except json.JSONDecodeError:
+        cp = None
+    if cp is not None:
+        cur_name = cp.get("name")
+        allowed = {"name", "displayName", "description", "version", "author", "publisher",
+                   "homepage", "repository", "license", "logo", "keywords", "category",
+                   "tags", "commands", "agents", "skills", "rules", "hooks", "mcpServers"}
+        for k in set(cp) - allowed:
+            errors.append(f".cursor-plugin/plugin.json: field `{k}` is not accepted (schema is additionalProperties:false)")
+        if not CURSOR_NAME_RE.match(str(cp.get("name", ""))):
+            errors.append(".cursor-plugin/plugin.json: `name` is required and must be kebab-case")
+        if "author" in cp:
+            a = cp["author"]
+            if not isinstance(a, dict) or set(a) - {"name", "email"}:
+                errors.append(".cursor-plugin/plugin.json: `author` allows only `name`/`email`")
+            elif not str(a.get("name", "")).strip():
+                errors.append(".cursor-plugin/plugin.json: `author.name` must be non-empty")
+
+cmp_ = ROOT / ".cursor-plugin" / "marketplace.json"
+if cmp_.exists():
+    try:
+        cm = json.loads(cmp_.read_text())
+    except json.JSONDecodeError:
+        cm = None
+    if cm is not None:
+        for k in set(cm) - {"name", "owner", "metadata", "plugins"}:
+            errors.append(f".cursor-plugin/marketplace.json: field `{k}` is not accepted")
+        if not str(cm.get("name", "")).strip():
+            errors.append(".cursor-plugin/marketplace.json: `name` is required")
+        entries = cm.get("plugins")
+        if not isinstance(entries, list) or not entries:
+            errors.append(".cursor-plugin/marketplace.json: `plugins` must be a non-empty array")
+        else:
+            for e in entries:
+                if set(e) - {"name", "source", "description"}:
+                    errors.append(".cursor-plugin/marketplace.json: plugin entry has unsupported keys")
+                if not e.get("name") or not e.get("source"):
+                    errors.append(".cursor-plugin/marketplace.json: each plugin entry needs `name` and `source`")
+                if e.get("source") == "." and cur_name and e.get("name") != cur_name:
+                    errors.append(f".cursor-plugin/marketplace.json: entry name `{e.get('name')}` must match plugin.json name `{cur_name}`")
 
 NAME_RE = re.compile(r"^[a-z0-9-]+$")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---", re.DOTALL)

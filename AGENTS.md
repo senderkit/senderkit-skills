@@ -36,6 +36,6 @@ Do not treat the bundled reference notes as a frozen API specification. Fetch th
 - Respect each platform's schema; they are not identical:
   - **Claude** auto-discovers `skills/` (no `skills` field needed).
   - **Codex** (see `https://github.com/openai/codex` → `codex-rs/skills/.../plugin-json-spec.md`) requires `name`, semver `version`, `description`, `author.name`, and an `interface` block with non-empty `displayName`, `shortDescription`, `longDescription`, `developerName`, `category`, a `capabilities` string array, and a `defaultPrompt` (array, ≤3 entries, ≤128 chars each). `author`/`homepage`/`repository`/`license` are valid; `hooks` and any unknown field are rejected. `apps`/`mcpServers` only when `.app.json`/`.mcp.json` exist.
-  - **Cursor** `author` takes `name`/`email` (not `url`).
-- `scripts/validate.py` enforces the Codex required fields; run it (or rely on CI) after editing `.codex-plugin/plugin.json`.
+  - **Cursor** (see `https://github.com/cursor/plugins` → `schemas/plugin.schema.json`) is `additionalProperties: false` — only the documented keys are allowed and unknown fields are rejected; `author` takes `name`/`email` only (not `url`); `name` must be kebab-case. Cursor also requires a `.cursor-plugin/marketplace.json` whose plugin entry `name` matches `plugin.json` `name` (`source: "."` for this single-plugin-at-root repo).
+- `scripts/validate.py` enforces the Codex and Cursor required fields/shapes; run it (or rely on CI) after editing any manifest.
 - Run `python3 scripts/validate.py` after editing manifests or skill frontmatter (CI runs the same check).
