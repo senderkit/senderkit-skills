@@ -49,6 +49,7 @@ This skill **writes SenderKit into the application's code**. To operate SenderKi
    - Read `references/api-reference.md` for current OpenAPI usage and request-shape lookup.
    - Read `references/verification.md` before finalizing.
    - Confirm the API key context, render templates with representative variables, send through test mode first, and inspect message status.
+   - For email, authenticate the sending domain (SPF/DKIM/DMARC) with the `senderkit-email-deliverability` skill so messages reach the inbox instead of spam.
 
 ## SenderKit basics
 
