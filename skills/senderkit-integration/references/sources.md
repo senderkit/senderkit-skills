@@ -10,7 +10,7 @@ This skill was built from:
   - Shows template-slug sends with variables.
   - Mentions multi-channel templates, versioning, locales, SDKs, CLI, and webhooks.
 - SenderKit OpenAPI contract:
-  - Official published URL: `https://www.senderkit.com/public/openapi.yaml`
+  - Official published URL: `https://www.senderkit.com/openapi.yaml`
   - Local app repo copy: `public/openapi.yaml`
   - Treat the published URL as source of truth and compare the local copy when working in the SenderKit repo.
 - SenderKit README from this repo: `README.md`

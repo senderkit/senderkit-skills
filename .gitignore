@@ -1,0 +1,11 @@
+# OS / editor noise
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# Firecrawl tooling
+.firecrawl/
+
+# The OpenAPI spec is fetched at runtime, never committed here
+senderkit-openapi.yaml

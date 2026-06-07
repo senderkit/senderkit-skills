@@ -7,7 +7,7 @@ This open-source skill lives in the [`senderkit/senderkit-skills`](https://githu
 ## What it does
 
 - Detects the project language, framework, package manager, and existing notification provider.
-- Fetches the current SenderKit OpenAPI spec from `https://www.senderkit.com/public/openapi.yaml`.
+- Fetches the current SenderKit OpenAPI spec from `https://www.senderkit.com/openapi.yaml`.
 - Chooses an official SDK when available, or falls back to REST for any language.
 - Preserves existing send semantics while migrating templates, variables, metadata, scheduling, attachments, and delivery status handling.
 - Encourages safe rollout with test-mode sends, render checks, idempotency, and message reconciliation.

@@ -1,8 +1,8 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "senderkit-skills",
   "metadata": {
-    "description": "SenderKit skills for Claude Code"
+    "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP."
   },
   "owner": {
     "name": "SenderKit"
@@ -10,6 +10,7 @@
   "plugins": [
     {
       "name": "senderkit",
+      "displayName": "SenderKit",
       "source": "./",
       "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",
       "category": "developer-tools"

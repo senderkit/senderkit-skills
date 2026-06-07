@@ -87,4 +87,4 @@ senderkit-skills/
 
 - SenderKit MCP overview: `https://docs.senderkit.com/mcp/overview`
 - SenderKit MCP tools: `https://docs.senderkit.com/mcp/tools`
-- SenderKit OpenAPI: `https://www.senderkit.com/public/openapi.yaml`
+- SenderKit OpenAPI: `https://www.senderkit.com/openapi.yaml`

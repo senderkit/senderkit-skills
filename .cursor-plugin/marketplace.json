@@ -1,0 +1,16 @@
+{
+  "name": "senderkit-skills",
+  "owner": {
+    "name": "SenderKit"
+  },
+  "metadata": {
+    "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP."
+  },
+  "plugins": [
+    {
+      "name": "senderkit",
+      "source": ".",
+      "description": "Integrate SenderKit transactional messaging into apps and operate SenderKit over MCP."
+    }
+  ]
+}
