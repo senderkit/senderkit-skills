@@ -4,6 +4,9 @@ on:
   push:
     branches: [main]
   pull_request:
+  schedule:
+    # Weekly, so externally-hosted doc links that rot are caught even without a PR.
+    - cron: "0 7 * * 1"
 
 jobs:
   manifests:
@@ -38,3 +41,25 @@ jobs:
           cp .claude-plugin/plugin.json "$tmp/.claude-plugin/plugin.json"
           cp -R skills "$tmp/skills"
           claude plugin validate "$tmp" --strict
+
+  links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check links in docs (Markdown + llms.txt)
+        uses: lycheeverse/lychee-action@v2
+        with:
+          # Verify the docs' internal and external links resolve. Retry transient
+          # failures, accept rate-limit responses, and skip the runtime MCP
+          # endpoint (mcp.senderkit.com is an MCP transport, not a GET target).
+          args: >-
+            --no-progress
+            --max-retries 3
+            --retry-wait-time 10
+            --accept '200..=299, 429'
+            --exclude 'mcp\.senderkit\.com'
+            --exclude '\$\{SENDERKIT_API_KEY\}'
+            './**/*.md' './**/llms.txt'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

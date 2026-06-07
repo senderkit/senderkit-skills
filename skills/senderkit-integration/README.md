@@ -27,6 +27,7 @@ senderkit-skills/
         |-- llms.txt
         |-- references/
         |   |-- api-reference.md
+        |   |-- examples.md
         |   |-- language-detection.md
         |   |-- migration-playbook.md
         |   |-- sources.md
@@ -43,12 +44,15 @@ Reuse from GitHub:
 git clone https://github.com/senderkit/senderkit-skills.git
 ```
 
-Codex / OpenAI-compatible skill loaders:
+Codex (OpenAI) discovers skills from `.agents/skills/` directories — user scope (every repo) or a single repo's scope:
 
 ```bash
-mkdir -p ~/.codex/skills
-cp -R senderkit-skills/skills/senderkit-integration ~/.codex/skills/senderkit-integration
+mkdir -p ~/.agents/skills
+cp -R senderkit-skills/skills/senderkit-integration ~/.agents/skills/senderkit-integration
+# repo-scoped instead? copy into <your-repo>/.agents/skills/
 ```
+
+Restart Codex so it picks up the skill.
 
 Prompt:
 
