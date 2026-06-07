@@ -1,4 +1,5 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
   "name": "senderkit",
   "displayName": "SenderKit",
   "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP.",

@@ -1,5 +1,5 @@
 {
-  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "senderkit-skills",
   "metadata": {
     "description": "Skills for integrating SenderKit transactional messaging into apps and operating SenderKit through MCP."

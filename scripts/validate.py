@@ -42,6 +42,38 @@ for rel in MANIFESTS:
     elif not data.get("name"):
         errors.append(f"{rel}: missing `name`")
 
+# Claude manifest contract (per code.claude.com/docs/en/plugins-reference + plugin-marketplaces).
+# Claude ignores unrecognized fields, so only enforce required shape + load-error cases.
+KEBAB_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+clp = ROOT / ".claude-plugin" / "plugin.json"
+clp_name = None
+if clp.exists():
+    try:
+        cl = json.loads(clp.read_text())
+    except json.JSONDecodeError:
+        cl = None
+    if cl is not None:
+        clp_name = cl.get("name")
+        if not KEBAB_RE.match(str(cl.get("name", ""))):
+            errors.append(".claude-plugin/plugin.json: `name` is required and must be kebab-case")
+        if "keywords" in cl and not (isinstance(cl["keywords"], list) and all(isinstance(k, str) for k in cl["keywords"])):
+            errors.append(".claude-plugin/plugin.json: `keywords` must be an array of strings (wrong type is a load error)")
+
+clm = ROOT / ".claude-plugin" / "marketplace.json"
+if clm.exists():
+    try:
+        cmk = json.loads(clm.read_text())
+    except json.JSONDecodeError:
+        cmk = None
+    if cmk is not None:
+        if not KEBAB_RE.match(str(cmk.get("name", ""))):
+            errors.append(".claude-plugin/marketplace.json: `name` is required and must be kebab-case")
+        if not str((cmk.get("owner") or {}).get("name", "")).strip():
+            errors.append(".claude-plugin/marketplace.json: `owner.name` is required")
+        for e in cmk.get("plugins") or []:
+            if not e.get("name") or not e.get("source"):
+                errors.append(".claude-plugin/marketplace.json: each plugin entry needs `name` and `source`")
+
 # Codex manifest contract (subset of openai/codex plugin-json-spec validator).
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+].+)?$")
 codex = ROOT / ".codex-plugin" / "plugin.json"
