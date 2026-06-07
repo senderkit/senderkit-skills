@@ -1,6 +1,8 @@
 # OS / editor noise
 .DS_Store
 *.swp
+.idea/
+.vscode/
 
 # Firecrawl tooling
 .firecrawl/
