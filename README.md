@@ -64,7 +64,7 @@ cp -R senderkit-skills/skills/senderkit-mcp-messaging-operations ~/.agents/skill
 # repo-scoped instead? copy into <your-repo>/.agents/skills/
 ```
 
-Restart Codex so it picks them up. Connect MCP: set `SENDERKIT_API_KEY` (the `sk_live_`/`sk_test_` prefix selects mode), then either rely on the bundled `.codex-plugin/mcp.json` config or run `senderkit mcp install --client codex`.
+Restart Codex so it picks them up. Connect MCP: the bundled `.codex-plugin/mcp.json` points Codex at `https://mcp.senderkit.com` over OAuth — run `codex mcp login senderkit` to sign in (no key stored). Prefer an API key? See [API key (optional)](#api-key-optional) below, or run `senderkit mcp install --client codex`.
 
 **Check it works:** run `/skills` (the SenderKit skills should be listed) or invoke one explicitly with `$senderkit-integration`.
 
@@ -91,24 +91,24 @@ Installing the plugin/skills gives you the `senderkit_*` MCP tools. Auth differs
 
 - **Claude Code** — OAuth via the repo's `.mcp.json`. Run `/mcp`, sign in, pick a workspace and test/live mode. **No API key is stored in the repo.**
 - **Cursor** — OAuth via the bundled `.cursor-plugin/plugin.json`. Toggle the server under Settings → MCP and sign in. **No API key is stored in the repo.**
-- **Codex** — **API key**. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode); the bundled `.codex-plugin/mcp.json` reads it via `bearer_token_env_var` before launching.
+- **Codex** — OAuth via the bundled `.codex-plugin/mcp.json`. Run `codex mcp login senderkit` to sign in. **No API key is stored in the repo.**
 
 #### API key (optional)
 
-`mcp.senderkit.com` also accepts an API key, so any client can skip OAuth. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode) and add an `Authorization` header in **your own** MCP config — for example in `~/.cursor/mcp.json`:
+Every shipped manifest is OAuth-only, so **no credential is committed**. `mcp.senderkit.com` also accepts an API key if you'd rather skip OAuth — set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode) and add it in **your own** MCP config:
 
-```json
-{
-  "mcpServers": {
-    "senderkit": {
-      "url": "https://mcp.senderkit.com",
-      "headers": { "Authorization": "Bearer ${env:SENDERKIT_API_KEY}" }
+- **Cursor / Claude Code / Windsurf** — add an `Authorization` header, e.g. in `~/.cursor/mcp.json`:
+  ```json
+  {
+    "mcpServers": {
+      "senderkit": {
+        "url": "https://mcp.senderkit.com",
+        "headers": { "Authorization": "Bearer ${env:SENDERKIT_API_KEY}" }
+      }
     }
   }
-}
-```
-
-The shipped plugin manifest stays OAuth-only so no credential string is committed.
+  ```
+- **Codex** — add `"bearer_token_env_var": "SENDERKIT_API_KEY"` to the `senderkit` server in your own `.codex-plugin/mcp.json` (or `~/.codex/config.toml`).
 
 Other clients (Windsurf, VS Code, Zed, Claude Desktop) and manual config: see [`skills/senderkit-mcp-messaging-operations/README.md`](skills/senderkit-mcp-messaging-operations/README.md#connecting-the-senderkit-mcp-server) and [`https://docs.senderkit.com/mcp/installation`](https://docs.senderkit.com/mcp/installation). The SenderKit CLI can also write the config for you: `senderkit mcp install --client cursor` (or `codex`, `claude-code`, `vscode`, `zed`, `all`).
 

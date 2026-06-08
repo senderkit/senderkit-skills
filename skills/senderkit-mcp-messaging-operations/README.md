@@ -68,8 +68,9 @@ available without a separate setup step. The auth path differs per client:
   and sign in. To use an API key instead, add an `Authorization: Bearer ${env:SENDERKIT_API_KEY}`
   header in your own `~/.cursor/mcp.json` (the `sk_live_` / `sk_test_` prefix selects mode).
 - **Codex** — the `.codex-plugin/plugin.json` manifest points `mcpServers` at
-  `.codex-plugin/mcp.json`, which uses **`bearer_token_env_var: "SENDERKIT_API_KEY"`** — Codex
-  reads that env var and sends it as a bearer token. Set `SENDERKIT_API_KEY` before launching.
+  `.codex-plugin/mcp.json`, which targets `https://mcp.senderkit.com` over **OAuth** (no key in
+  the repo). Run `codex mcp login senderkit` to sign in. To use an API key instead, add
+  `"bearer_token_env_var": "SENDERKIT_API_KEY"` to that server in your own config.
 
 Prefer to wire it up manually, or use another client (Windsurf, VS Code, Zed, Claude Desktop)?
 The SenderKit CLI writes the correct config per client:
