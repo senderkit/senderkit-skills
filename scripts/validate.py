@@ -180,6 +180,31 @@ for rel in (".mcp.json", ".codex-plugin/mcp.json"):
         if not scfg.get("url") and not scfg.get("command"):
             errors.append(f"{rel}: server `{sname}` needs a `url` or `command`")
 
+# opencode config (optional). opencode has no plugin manifest; the root
+# `opencode.json` is its auto-loaded project config (analog to Claude's
+# `.mcp.json`) and carries the bundled SenderKit MCP server under a top-level
+# `mcp` key (NOT `mcpServers`). Each server is `{ "type": "remote", "url": ... }`
+# (remote) or a local `command`. Ships OAuth-only (no `oauth`/`headers`); API
+# key is opt-in per user. Keep it parseable and well-formed.
+opencode_path = ROOT / "opencode.json"
+if opencode_path.exists():
+    try:
+        oc = json.loads(opencode_path.read_text())
+    except json.JSONDecodeError as exc:
+        errors.append(f"opencode.json: invalid JSON ({exc})")
+        oc = None
+    if oc is not None:
+        servers = oc.get("mcp")
+        if not isinstance(servers, dict) or not servers:
+            errors.append("opencode.json: `mcp` must be a non-empty object")
+        else:
+            for sname, scfg in servers.items():
+                if not isinstance(scfg, dict):
+                    errors.append(f"opencode.json: server `{sname}` must be an object")
+                    continue
+                if not scfg.get("url") and not scfg.get("command"):
+                    errors.append(f"opencode.json: server `{sname}` needs a `url` or `command`")
+
 NAME_RE = re.compile(r"^[a-z0-9-]+$")
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---", re.DOTALL)
 
