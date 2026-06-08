@@ -156,8 +156,9 @@ if cmp_.exists():
 # Bundled MCP server config files (optional). When present they auto-configure
 # the SenderKit MCP server on plugin install, so keep them parseable and
 # well-formed. `.mcp.json` is the Claude Code default (OAuth); Codex points its
-# manifest `mcpServers` path at `.codex-plugin/mcp.json` (API key via
-# `bearer_token_env_var`); Cursor inlines `mcpServers` in its plugin manifest.
+# manifest `mcpServers` path at `.codex-plugin/mcp.json` (also OAuth — `url` only);
+# Cursor inlines `mcpServers` in its plugin manifest (OAuth, `url` only). All ship
+# OAuth-only with no committed credential; API keys are an opt-in per user.
 for rel in (".mcp.json", ".codex-plugin/mcp.json"):
     mcp_path = ROOT / rel
     if not mcp_path.exists():
