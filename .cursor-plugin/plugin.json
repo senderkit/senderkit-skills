@@ -15,10 +15,7 @@
   "skills": "./skills/",
   "mcpServers": {
     "senderkit": {
-      "url": "https://mcp.senderkit.com",
-      "headers": {
-        "Authorization": "Bearer ${SENDERKIT_API_KEY}"
-      }
+      "url": "https://mcp.senderkit.com"
     }
   }
 }

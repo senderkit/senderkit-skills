@@ -63,9 +63,10 @@ available without a separate setup step. The auth path differs per client:
 - **Claude Code** — uses the repo's `.mcp.json` (`https://mcp.senderkit.com`, no key). On first
   use run `/mcp` and sign in; Claude Code drives the **OAuth** flow and you pick a workspace and
   test/live mode. No secret is stored in the repo. This is the default and recommended path.
-- **Cursor** — the `.cursor-plugin/plugin.json` manifest bundles the server with an **API key**.
-  Set `SENDERKIT_API_KEY` in your environment (the `sk_live_` / `sk_test_` prefix selects mode);
-  Cursor expands it into the `Authorization: Bearer ${SENDERKIT_API_KEY}` header.
+- **Cursor** — the `.cursor-plugin/plugin.json` manifest points the server at
+  `https://mcp.senderkit.com` over **OAuth** (no key in the repo). Toggle it on under Settings → MCP
+  and sign in. To use an API key instead, add an `Authorization: Bearer ${env:SENDERKIT_API_KEY}`
+  header in your own `~/.cursor/mcp.json` (the `sk_live_` / `sk_test_` prefix selects mode).
 - **Codex** — the `.codex-plugin/plugin.json` manifest points `mcpServers` at
   `.codex-plugin/mcp.json`, which uses **`bearer_token_env_var: "SENDERKIT_API_KEY"`** — Codex
   reads that env var and sends it as a bearer token. Set `SENDERKIT_API_KEY` before launching.

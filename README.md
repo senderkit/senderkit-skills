@@ -79,7 +79,7 @@ git clone https://github.com/senderkit/senderkit-skills.git
 ln -s "$(pwd)/senderkit-skills" ~/.cursor/plugins/local/senderkit
 ```
 
-Reload Cursor (**Developer: Reload Window**). Skills show up under Settings → Rules & Skills and can be invoked with `/senderkit-integration`. Connect MCP: set `SENDERKIT_API_KEY` (the bundled `.cursor-plugin/plugin.json` expands it into the `Authorization: Bearer ${SENDERKIT_API_KEY}` header), or run `senderkit mcp install --client cursor`; toggle the server under Settings → MCP.
+Reload Cursor (**Developer: Reload Window**). Skills show up under Settings → Rules & Skills and can be invoked with `/senderkit-integration`. Connect MCP: the bundled `.cursor-plugin/plugin.json` points Cursor at `https://mcp.senderkit.com` over OAuth — open Settings → MCP, toggle the server on, and sign in (no key stored). Prefer an API key? See [API key (optional)](#api-key-optional) below, or run `senderkit mcp install --client cursor`.
 
 For teams, import this GitHub repo as a Team Marketplace (Dashboard → Settings → Plugins; Teams/Enterprise plans). See <https://cursor.com/docs/plugins>.
 
@@ -90,7 +90,25 @@ For teams, import this GitHub repo as a Team Marketplace (Dashboard → Settings
 Installing the plugin/skills gives you the `senderkit_*` MCP tools. Auth differs per client:
 
 - **Claude Code** — OAuth via the repo's `.mcp.json`. Run `/mcp`, sign in, pick a workspace and test/live mode. **No API key is stored in the repo.**
-- **Cursor / Codex** — **API key**. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode) before launching.
+- **Cursor** — OAuth via the bundled `.cursor-plugin/plugin.json`. Toggle the server under Settings → MCP and sign in. **No API key is stored in the repo.**
+- **Codex** — **API key**. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode); the bundled `.codex-plugin/mcp.json` reads it via `bearer_token_env_var` before launching.
+
+#### API key (optional)
+
+`mcp.senderkit.com` also accepts an API key, so any client can skip OAuth. Set `SENDERKIT_API_KEY` (the `sk_live_` / `sk_test_` prefix selects mode) and add an `Authorization` header in **your own** MCP config — for example in `~/.cursor/mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "senderkit": {
+      "url": "https://mcp.senderkit.com",
+      "headers": { "Authorization": "Bearer ${env:SENDERKIT_API_KEY}" }
+    }
+  }
+}
+```
+
+The shipped plugin manifest stays OAuth-only so no credential string is committed.
 
 Other clients (Windsurf, VS Code, Zed, Claude Desktop) and manual config: see [`skills/senderkit-mcp-messaging-operations/README.md`](skills/senderkit-mcp-messaging-operations/README.md#connecting-the-senderkit-mcp-server) and [`https://docs.senderkit.com/mcp/installation`](https://docs.senderkit.com/mcp/installation). The SenderKit CLI can also write the config for you: `senderkit mcp install --client cursor` (or `codex`, `claude-code`, `vscode`, `zed`, `all`).
 
