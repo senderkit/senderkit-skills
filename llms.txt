@@ -1,7 +1,7 @@
 # SenderKit Skills
 
-> Portable AI-agent skills that let coding assistants (Claude Code, OpenAI Codex, Cursor, and
-> other Agent Skills / MCP-capable tools) add and operate transactional email, SMS, push, and
+> Portable AI-agent skills that let coding assistants (Claude Code, OpenAI Codex, Cursor,
+> opencode, and other Agent Skills / MCP-capable tools) add and operate transactional email, SMS, push, and
 > web-push notifications using SenderKit. SenderKit sends directly or routes through providers
 > like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo, so apps are not
 > locked into one vendor.

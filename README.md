@@ -1,6 +1,6 @@
 # SenderKit Skills
 
-**Add transactional email, SMS, push, and web-push notifications to any app — straight from your AI coding agent.** Portable AI-agent skills for [SenderKit](https://www.senderkit.com), packaged as a plugin for Claude Code, OpenAI Codex, Cursor, and other Agent Skills-compatible coding assistants.
+**Add transactional email, SMS, push, and web-push notifications to any app — straight from your AI coding agent.** Portable AI-agent skills for [SenderKit](https://www.senderkit.com), packaged as a plugin for Claude Code, OpenAI Codex, Cursor, opencode, and other Agent Skills-compatible coding assistants.
 
 SenderKit sends email, SMS, push, and web-push directly, and can also route through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo — so your app isn't locked into one vendor. These skills let an agent wire SenderKit into your codebase and operate it at runtime over MCP.
 
@@ -29,7 +29,7 @@ Rule of thumb: **integration** writes SenderKit into your code; **messaging oper
 
 ## Install
 
-This repo ships per-platform metadata — Claude Code (`.claude-plugin/`), OpenAI Codex (`.codex-plugin/`), and Cursor (`.cursor-plugin/`) — and the authored skills under `./skills/`. Pick your agent below; each path ends with a quick check so you know it worked.
+This repo ships per-platform metadata — Claude Code (`.claude-plugin/`), OpenAI Codex (`.codex-plugin/`), Cursor (`.cursor-plugin/`), and opencode (`opencode.json`) — and the authored skills under `./skills/`. Pick your agent below; each path ends with a quick check so you know it worked.
 
 ### Claude Code
 
@@ -85,6 +85,23 @@ For teams, import this GitHub repo as a Team Marketplace (Dashboard → Settings
 
 **Check it works:** type `/senderkit-integration` in chat, or ask *"Send a test email and check its status via SenderKit MCP."*
 
+### opencode
+
+opencode auto-discovers Agent Skills (one folder per skill, `SKILL.md` inside) from `~/.config/opencode/skills/` (user scope, every repo) or `.opencode/skills/` (repo scope) — and also reads `.claude/skills/` and `.agents/skills/`, so the same skill folders work unchanged. Vendor them in:
+
+```bash
+git clone https://github.com/senderkit/senderkit-skills.git
+mkdir -p ~/.config/opencode/skills
+cp -R senderkit-skills/skills/senderkit-integration ~/.config/opencode/skills/
+cp -R senderkit-skills/skills/senderkit-mcp-messaging-operations ~/.config/opencode/skills/
+cp -R senderkit-skills/skills/senderkit-email-deliverability ~/.config/opencode/skills/
+# repo-scoped instead? copy into <your-repo>/.opencode/skills/
+```
+
+Connect MCP: merge the `mcp` block from this repo's [`opencode.json`](opencode.json) into your own `opencode.json` (project root or `~/.config/opencode/opencode.json`). It points opencode at `https://mcp.senderkit.com` as a `"type": "remote"` server with no auth, so opencode runs the OAuth flow on first use (no key stored). Sign in with `opencode mcp auth senderkit`. Prefer an API key? See [API key (optional)](#api-key-optional) below.
+
+**Check it works:** run `opencode mcp list` (the `senderkit` server should be listed) or ask *"Use senderkit-integration to add a welcome email."*
+
 ### Connect the SenderKit MCP server
 
 Installing the plugin/skills gives you the `senderkit_*` MCP tools. Auth differs per client:
@@ -92,6 +109,7 @@ Installing the plugin/skills gives you the `senderkit_*` MCP tools. Auth differs
 - **Claude Code** — OAuth via the repo's `.mcp.json`. Run `/mcp`, sign in, pick a workspace and test/live mode. **No API key is stored in the repo.**
 - **Cursor** — OAuth via the bundled `.cursor-plugin/plugin.json`. Toggle the server under Settings → MCP and sign in. **No API key is stored in the repo.**
 - **Codex** — OAuth via the bundled `.codex-plugin/mcp.json`. Run `codex mcp login senderkit` to sign in. **No API key is stored in the repo.**
+- **opencode** — OAuth via the bundled `opencode.json` (`"type": "remote"`, `url` only). Run `opencode mcp auth senderkit` to sign in. **No API key is stored in the repo.**
 
 #### API key (optional)
 
@@ -109,6 +127,7 @@ Every shipped manifest is OAuth-only, so **no credential is committed**. `mcp.se
   }
   ```
 - **Codex** — add `"bearer_token_env_var": "SENDERKIT_API_KEY"` to the `senderkit` server in your own `.codex-plugin/mcp.json` (or `~/.codex/config.toml`).
+- **opencode** — in your own `opencode.json`, set `"oauth": false` on the `senderkit` server and add a header: `"headers": { "Authorization": "Bearer {env:SENDERKIT_API_KEY}" }` (opencode interpolates `{env:VAR}`).
 
 Other clients (Windsurf, VS Code, Zed, Claude Desktop) and manual config: see [`skills/senderkit-mcp-messaging-operations/README.md`](skills/senderkit-mcp-messaging-operations/README.md#connecting-the-senderkit-mcp-server) and [`https://docs.senderkit.com/mcp/installation`](https://docs.senderkit.com/mcp/installation). The SenderKit CLI can also write the config for you: `senderkit mcp install --client cursor` (or `codex`, `claude-code`, `vscode`, `zed`, `all`).
 
@@ -176,6 +195,7 @@ senderkit-skills/
 |   |-- marketplace.json
 |   `-- plugin.json
 |-- .mcp.json
+|-- opencode.json
 |-- AGENTS.md
 |-- LICENSE
 |-- README.md

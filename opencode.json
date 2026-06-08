@@ -1,0 +1,10 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "senderkit": {
+      "type": "remote",
+      "url": "https://mcp.senderkit.com",
+      "enabled": true
+    }
+  }
+}
