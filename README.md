@@ -1,6 +1,8 @@
 # SenderKit Skills
 
-[![HOL Guard](https://img.shields.io/badge/HOL%20Guard-Verified-green)](https://hol.org/guard) [![HOL Guard Score](https://img.shields.io/badge/Score-95%2F130-brightgreen)](https://github.com/hashgraph-online/hol-guard)
+[![HOL Guard](https://img.shields.io/badge/HOL%20Guard-Verified-green)](https://hol.org/guard)
+[![HOL Guard Score](https://img.shields.io/badge/Score-95%2F130-brightgreen)](https://github.com/hashgraph-online/hol-guard)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/senderkit/senderkit-skills/badge)](https://securityscorecards.dev/viewer/?uri=github.com/senderkit/senderkit-skills)
 
 **Add transactional email, SMS, push, and web-push notifications to any app — straight from your AI coding agent.** Portable AI-agent skills for [SenderKit](https://www.senderkit.com), packaged as a plugin for Claude Code, OpenAI Codex, Cursor, opencode, and other Agent Skills-compatible coding assistants.
 
