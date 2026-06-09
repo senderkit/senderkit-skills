@@ -15,6 +15,7 @@
   "interface": {
     "displayName": "SenderKit",
     "shortDescription": "Send email, SMS & push from your AI agent.",
+    "composerIcon": "./assets/icon.svg",
     "longDescription": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push — welcome emails, OTPs, receipts, and more — then create templates, send, and monitor every message your app sends. One messaging layer, no provider lock-in. Wire it into your codebase, or just send and inspect messages live over MCP.",
     "developerName": "SenderKit",
     "category": "Productivity",
