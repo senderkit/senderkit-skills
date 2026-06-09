@@ -1,5 +1,7 @@
 # SenderKit Skills
 
+[![HOL Guard](https://img.shields.io/badge/HOL%20Guard-Verified-green)](https://hol.org/guard) [![HOL Guard Score](https://img.shields.io/badge/Score-95%2F130-brightgreen)](https://github.com/hashgraph-online/hol-guard)
+
 **Add transactional email, SMS, push, and web-push notifications to any app — straight from your AI coding agent.** Portable AI-agent skills for [SenderKit](https://www.senderkit.com), packaged as a plugin for Claude Code, OpenAI Codex, Cursor, opencode, and other Agent Skills-compatible coding assistants.
 
 SenderKit sends email, SMS, push, and web-push directly, and can also route through providers like Resend, SendGrid, Postmark, Mailgun, SES, Twilio, FCM, APNs, and Expo — so your app isn't locked into one vendor. These skills let an agent wire SenderKit into your codebase and operate it at runtime over MCP.
