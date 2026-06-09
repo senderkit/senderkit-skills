@@ -69,11 +69,3 @@ Two accepted-residue findings are expected and do not fail the gate: the per-ski
 `llms.txt` files (a deliberate llmstxt.org convention that Magika flags as a
 content-type mismatch) and the skill-security "network usage" notes (inherent to
 messaging skills).
-
-### Listing on the awesome-codex-plugins registry (one-time, manual)
-
-Registry listing is a one-time action and is intentionally **not** automated (it
-would require handing a standing token to a third-party action). When ready, either
-open a submission issue on `hashgraph-online/awesome-codex-plugins`, or run
-`pipx run plugin-scanner ... submit` once locally. Adding skills or bumping the
-version later does **not** require resubmission — the registry references this repo.
