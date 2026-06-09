@@ -194,11 +194,18 @@ senderkit-skills/
 |-- .cursor-plugin/
 |   |-- marketplace.json
 |   `-- plugin.json
+|-- .github/
+|   |-- dependabot.yml
+|   `-- workflows/
+|       |-- validate.yml
+|       `-- hol-scanner.yml
+|-- .codexignore
 |-- .mcp.json
 |-- opencode.json
 |-- AGENTS.md
 |-- LICENSE
 |-- README.md
+|-- SECURITY.md
 |-- llms.txt
 `-- skills/
     |-- senderkit-email-deliverability/
