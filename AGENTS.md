@@ -21,6 +21,10 @@ Plugin metadata and top-level docs are also safe to edit:
 - `README.md`
 - `AGENTS.md`
 - `llms.txt`
+- `SECURITY.md` (vulnerability disclosure policy)
+- `.codexignore` (files excluded from the shipped plugin bundle)
+- `.github/dependabot.yml` (weekly GitHub Actions updates)
+- `.github/workflows/hol-scanner.yml` (HOL plugin scanner quality gate)
 
 ## Intent
 
@@ -48,3 +52,28 @@ Do not treat the bundled reference notes as a frozen API specification. Fetch th
   - **opencode** (see `https://opencode.ai/docs/mcp-servers` and `https://opencode.ai/docs/config`) has **no plugin manifest** — its "plugins" are JS/TS hook modules, unrelated to skills/MCP. It auto-discovers Agent Skills from `.opencode/skills/`, `~/.config/opencode/skills/`, `.claude/skills/`, and `.agents/skills/`, so the authored `skills/` work unchanged once vendored into one of those paths. MCP is configured in `opencode.json` (root-auto-loaded project config; the direct analog to Claude's `.mcp.json`) under a top-level `mcp` key — **not** `mcpServers`. The bundled `opencode.json` declares `senderkit` as `{ "type": "remote", "url": "https://mcp.senderkit.com", "enabled": true }` — OAuth-only (a remote server with no `oauth`/`headers` runs the OAuth flow on first use; sign in with `opencode mcp auth senderkit`). An API key is opt-in per user by setting `"oauth": false` and a `"headers": { "Authorization": "Bearer {env:SENDERKIT_API_KEY}" }` block (opencode interpolates `{env:VAR}`, not `${...}`). `$schema` is `https://opencode.ai/config.json`.
 - `scripts/validate.py` enforces the Claude, Codex, and Cursor required fields/shapes, validates the bundled `mcpServers` config files `.mcp.json` and `.codex-plugin/mcp.json` (parseable, non-empty `mcpServers`, each server has a `url` or `command`), and validates opencode's `opencode.json` (parseable, non-empty `mcp` object, each server has a `url` or `command`); run it (or rely on CI) after editing any manifest or MCP config. CI (`.github/workflows/validate.yml`) also installs the Claude Code CLI and runs `claude plugin validate . --strict` plus the isolated plugin-manifest + skills check (no API key required).
 - Run `python3 scripts/validate.py` after editing manifests or skill frontmatter (CI runs the same check).
+
+## Quality Gate
+
+`.github/workflows/hol-scanner.yml` runs the HOL plugin scanner
+(`hashgraph-online/ai-plugin-scanner-action`) on every PR and push to `main`. It
+gates at `min_score: 90` and fails on `high`/`critical` findings. The gate uses the
+built-in `GITHUB_TOKEN` only — there is **no** registry auto-submit and **no** custom
+secret.
+
+Run it locally before pushing: `pipx run plugin-scanner scan . --format text`.
+`scripts/validate.py` also asserts the scanner's required files
+(`SECURITY.md`, `.codexignore`, `.github/dependabot.yml`) exist.
+
+Two accepted-residue findings are expected and do not fail the gate: the per-skill
+`llms.txt` files (a deliberate llmstxt.org convention that Magika flags as a
+content-type mismatch) and the skill-security "network usage" notes (inherent to
+messaging skills).
+
+### Listing on the awesome-codex-plugins registry (one-time, manual)
+
+Registry listing is a one-time action and is intentionally **not** automated (it
+would require handing a standing token to a third-party action). When ready, either
+open a submission issue on `hashgraph-online/awesome-codex-plugins`, or run
+`pipx run plugin-scanner ... submit` once locally. Adding skills or bumping the
+version later does **not** require resubmission — the registry references this repo.
