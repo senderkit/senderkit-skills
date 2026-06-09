@@ -42,6 +42,18 @@ for rel in MANIFESTS:
     elif not data.get("name"):
         errors.append(f"{rel}: missing `name`")
 
+# Files the HOL plugin scanner (.github/workflows/hol-scanner.yml) scores for
+# Security / Operational Security / Best Practices. Assert they exist so this
+# validator fails fast locally before the scanner does in CI.
+REQUIRED_FILES = [
+    "SECURITY.md",
+    ".codexignore",
+    ".github/dependabot.yml",
+]
+for rel in REQUIRED_FILES:
+    if not (ROOT / rel).exists():
+        errors.append(f"{rel}: missing (required by the HOL scanner gate)")
+
 # Claude manifest contract (per code.claude.com/docs/en/plugins-reference + plugin-marketplaces).
 # Claude ignores unrecognized fields, so only enforce required shape + load-error cases.
 KEBAB_RE = re.compile(r"^[a-z0-9][a-z0-9-]*$")
