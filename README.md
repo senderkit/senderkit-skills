@@ -35,6 +35,18 @@ Rule of thumb: **integration** writes SenderKit into your code; **messaging oper
 
 This repo ships per-platform metadata — Claude Code (`.claude-plugin/`), OpenAI Codex (`.codex-plugin/`), Cursor (`.cursor-plugin/`), and opencode (`opencode.json`) — and the authored skills under `./skills/`. Pick your agent below; each path ends with a quick check so you know it worked.
 
+### Any agent (skills CLI)
+
+The [skills CLI](https://skills.sh) installs the skills into the right location for whichever agent you use (Claude Code, Codex, Cursor, opencode, and others):
+
+```bash
+npx skills add senderkit/senderkit-skills
+```
+
+It detects your agent, lists the three skills, and copies the ones you pick. This installs the skills only — to get the `senderkit_*` MCP tools, also connect the MCP server (see [Connect the SenderKit MCP server](#connect-the-senderkit-mcp-server)).
+
+**Check it works:** ask your agent *"Use senderkit-integration to add a welcome email."*
+
 ### Claude Code
 
 From the marketplace (recommended):
