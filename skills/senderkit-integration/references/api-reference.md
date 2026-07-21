@@ -63,4 +63,4 @@ These are integration principles, not schema guarantees:
 
 ## SDK selection
 
-Before installing a SenderKit SDK, verify the current official package name from docs or package metadata. If docs and examples disagree, use the OpenAPI REST fallback and leave a note in the implementation summary.
+Prefer an official SDK over hand-rolled REST when one exists for the stack. The procedure — read the live docs index (`https://docs.senderkit.com/llms.txt`), match the stack, fall back to a package-registry check, then REST — is owned by `sdk-discovery.md`. Do not maintain a separate SDK list here; the REST guidance in this file is the fallback for when no SDK applies.

@@ -1,8 +1,11 @@
 # REST examples
 
 Illustrative, multi-language snippets for the two operations that anchor most
-integrations: **send a templated message** and **read its status**. They use raw
-HTTP so they stay valid regardless of SDK availability or package naming.
+integrations: **send a templated message** and **read its status**. Where an
+official SDK exists (TypeScript, PHP, Python) the SDK form is shown first; the
+raw-HTTP form is always included as a fallback that stays valid regardless of SDK
+availability or package naming. These are examples, not the SDK inventory —
+`sdk-discovery.md` resolves the current official SDK for the detected stack.
 
 **Before copying these, confirm the live contract.** Fetch
 `https://www.senderkit.com/openapi.yaml` and verify the base URL,
@@ -87,6 +90,31 @@ const { id, status } = await res.json();
 
 ## Python
 
+Official SDK (`pip install senderkit`) — sync `SenderKit` and `AsyncSenderKit`,
+auto-generated idempotency keys, and framework extras (`senderkit[django]`,
+`[fastapi]`, `[flask]`, `[celery]`):
+
+```python
+import os
+from senderkit import SenderKit
+
+sk = SenderKit(api_key=os.environ["SENDERKIT_API_KEY"])  # sk_live_… or sk_test_…
+
+result = sk.send(
+    "welcome",               # template slug
+    "user@example.com",      # recipient
+    vars={"name": "Ada"},
+    metadata={"user_id": "usr_123"},
+)
+
+result.id       # "msg_…"
+result.status   # "queued" | "scheduled"
+
+message = sk.messages.get("msg_123")  # read status later
+```
+
+No-dependency `httpx`/`requests` fallback (when avoiding a dependency, or the SDK is unavailable):
+
 ```python
 import os
 import httpx  # or: requests
@@ -110,6 +138,34 @@ message = resp.json()  # {"id": "msg_…", "status": "queued", "livemode": False
 ```
 
 ## PHP
+
+Official SDK (`composer require senderkit/senderkit-php`) — it auto-generates the
+idempotency key and picks up any installed PSR-18 client (Guzzle, `symfony/http-client`):
+
+```php
+<?php
+use SenderKit\Client;
+use SenderKit\Request\TemplateSend;
+
+$sk = new Client(apiKey: getenv("SENDERKIT_API_KEY")); // sk_live_… or sk_test_…
+
+$result = $sk->send(new TemplateSend(
+    template: "welcome",
+    to: "user@example.com",
+    vars: ["name" => "Ada"],
+    metadata: ["userId" => "usr_123"],
+    idempotencyKey: "welcome:usr_123", // optional; omit and the SDK generates one
+));
+
+$result->id;     // "msg_…"
+$result->status; // "queued" | "scheduled"
+```
+
+Read status later — `$sk->messages->get("msg_123")` returns a `Message`. Laravel apps
+can use `senderkit/senderkit-laravel` (notification channel + mail transport); Symfony
+apps `senderkit/senderkit-symfony`. See `https://docs.senderkit.com/sdks/php`.
+
+No-dependency `curl` fallback (when avoiding a Composer dependency, or the SDK is unavailable):
 
 ```php
 <?php
