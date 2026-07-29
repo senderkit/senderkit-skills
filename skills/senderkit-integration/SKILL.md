@@ -27,10 +27,9 @@ This skill **writes SenderKit into the application's code**. To operate SenderKi
    - If working inside the SenderKit repo, compare it with the checked-in copy by running `python3 scripts/fetch_openapi.py --compare public/openapi.yaml`.
    - If network access is unavailable, use the repo's `public/openapi.yaml` when present and clearly note that the live contract was not checked.
 
-3. Choose the integration path.
-   - Use an official SenderKit SDK when the current docs or package manifests confirm one for the stack.
-   - For JavaScript/TypeScript, the official package is `@senderkit/sdk` (`import { SenderKit } from "@senderkit/sdk"`). Confirm the current version on npm before installing; if docs and package metadata disagree, fall back to the REST API.
-   - For any other language, or when SDK availability is uncertain, use the REST API directly. See `references/examples.md` for ready-to-adapt REST snippets.
+3. Choose the integration path — discover the SDK, do not assume it.
+   - The set of official SDKs changes over time, so resolve it at integration time rather than trusting a fixed list. Follow `references/sdk-discovery.md`: read the live docs index (`https://docs.senderkit.com/llms.txt`, or run `scripts/list_sdks.py`), match the detected stack, and install that SDK. If the index has no entry for the language, check its package registry (npm/PyPI/Packagist/…) for an official SenderKit package before REST.
+   - Use the REST API only when no official SDK exists for the stack, you are deliberately avoiding a dependency (e.g. edge runtimes), or a lookup shows the package was renamed or yanked. Not being able to reach the index/registry is **not** a reason to fall back — install the SDK named in the `sdk-discovery.md` cache and note the version was not live-checked. See `references/examples.md` for both SDK and REST snippets.
    - Keep the old provider until parity is verified; do not remove working delivery code as the first step.
 
 4. Implement a local SenderKit boundary.
@@ -76,17 +75,20 @@ skills/senderkit-integration/
 |   |-- examples.md
 |   |-- language-detection.md
 |   |-- migration-playbook.md
+|   |-- sdk-discovery.md
 |   |-- sources.md
 |   `-- verification.md
 `-- scripts/
-    `-- fetch_openapi.py
+    |-- fetch_openapi.py
+    `-- list_sdks.py
 ```
 
 ## Reference files
 
 - `references/language-detection.md` - Detect project language, framework, package manager, and existing providers.
+- `references/sdk-discovery.md` - Resolve the current official SDK for the detected stack at integration time (live docs index + package-registry backstop), or fall back to REST.
 - `references/api-reference.md` - How to fetch/read the current OpenAPI contract and apply it safely.
-- `references/examples.md` - Ready-to-adapt REST snippets (curl, TypeScript, Python, PHP, Ruby, Go) for a template send and a status read.
+- `references/examples.md` - Ready-to-adapt SDK and REST snippets (curl, TypeScript, Python, PHP, Ruby, Go) for a template send and a status read.
 - `references/migration-playbook.md` - Provider migration strategy and mapping from common email/SMS/push systems.
 - `references/verification.md` - Test, rollout, and production-safety checklist.
 - `references/sources.md` - Source notes used to build this skill.

@@ -36,28 +36,33 @@ sendEmail|send_email|mailer|mail|smtp|nodemailer|resend|sendgrid|postmark|mailgu
 
 ## Integration path by ecosystem
 
+Which SDK (or REST) to use is owned by `sdk-discovery.md` — read it once the stack is known; it resolves the package from the live index, falls back to a package-registry check, then REST. Do **not** hardcode package choices here. The notes below are about *where the send belongs* in each ecosystem, not which package to install.
+
 ### Node.js / TypeScript
 
-- Prefer the official SenderKit SDK when current docs or package metadata confirm the package name.
 - If the app is Next.js, Remix, Nuxt, SvelteKit, Astro, Express, Hono, or another server-capable framework, send only from server routes/actions/jobs.
 - Add a local wrapper that accepts app-domain inputs and calls SenderKit. Keep framework handlers thin.
-- Use `fetch` REST fallback when avoiding a dependency or when SDK package naming is uncertain.
+- On edge runtimes, or when deliberately avoiding a dependency, use the `fetch` REST form instead of the SDK.
 
 ### Python
 
-- Use `httpx` or `requests` unless an official SenderKit Python SDK is confirmed.
-- In Django/FastAPI/Flask, place the client in an infrastructure/service module and inject settings from environment.
+- Place the client in an infrastructure/service module and inject settings from environment.
+- Django, FastAPI, Flask, and Celery each have a first-class integration in the Python SDK (`sdk-discovery.md` has the package and its extras) — prefer it over a hand-rolled client.
 - Use short request timeouts and preserve background-job retry behavior.
+
+### PHP
+
+- A framework-agnostic core plus Laravel and Symfony integrations exist; `sdk-discovery.md` resolves the exact package. Framework signals: Laravel → `artisan`, `laravel/framework`; Symfony → `symfony.lock`.
+- Prefer the framework integration when present, so sends flow through the app's normal Mail/Notification plumbing instead of a hand-rolled HTTP call.
+- Keep `SENDERKIT_API_KEY` in the framework's config/secret system, not source code.
 
 ### Go
 
-- Use `net/http` with `context.Context`, explicit timeout, typed request/response structs, and stable idempotency keys.
-- Keep the SenderKit client behind an interface so tests can fake it.
+- Keep the client behind an interface so tests can fake it. If `sdk-discovery.md` resolves no SDK, use `net/http` with `context.Context`, explicit timeout, typed request/response structs, and stable idempotency keys.
 
-### Ruby / PHP / Java / .NET / Rust / other
+### Ruby / Java / .NET / Rust / other
 
-- Use the REST API unless current SenderKit docs provide an official SDK for the stack.
-- Follow the platform's normal HTTP client, config, logging, and test patterns.
+- Follow `sdk-discovery.md`; if it yields no official SDK, use the REST API with the platform's normal HTTP client, config, logging, and test patterns.
 - Keep credentials in the framework's secret/config system, not source code.
 
 ## What to produce
