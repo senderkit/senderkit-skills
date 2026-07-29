@@ -17,6 +17,7 @@ Canonical instructions:
 Optional references:
 
 - `references/language-detection.md`
+- `references/sdk-discovery.md`
 - `references/api-reference.md`
 - `references/examples.md`
 - `references/migration-playbook.md`
@@ -26,6 +27,7 @@ Optional references:
 Utility:
 
 - `scripts/fetch_openapi.py`
+- `scripts/list_sdks.py`
 
 Official SenderKit OpenAPI:
 

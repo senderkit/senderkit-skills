@@ -1,4 +1,4 @@
-# REST examples
+# Send examples (SDK and REST)
 
 Illustrative, multi-language snippets for the two operations that anchor most
 integrations: **send a templated message** and **read its status**. Where an
