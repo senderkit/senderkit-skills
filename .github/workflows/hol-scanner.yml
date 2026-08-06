@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
       - name: HOL plugin scanner (gate at 90, fail on high)
-        uses: hashgraph-online/ai-plugin-scanner-action@50fd443330232d85fd33e505aefd25af9aba700e # v1
+        uses: hashgraph-online/ai-plugin-scanner-action@8f0a503ca2a70c1968a9a883e11fdff5737b7909 # v1
         with:
           plugin_dir: "."
           mode: scan
