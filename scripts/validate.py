@@ -116,6 +116,19 @@ if codex.exists():
             errors.append(".codex-plugin/plugin.json: `interface.capabilities` must be a string array")
         if "defaultPrompt" not in iface and "default_prompt" not in iface:
             errors.append(".codex-plugin/plugin.json: `interface.defaultPrompt` is required")
+        # `mcpServers` is a `./`-relative companion-file path or an inline
+        # server map (openai/codex plugin-json-spec allows both).
+        mcps = cx.get("mcpServers")
+        if mcps is not None:
+            if isinstance(mcps, str):
+                if not mcps.startswith("./"):
+                    errors.append(".codex-plugin/plugin.json: `mcpServers` path must start with `./`")
+            elif isinstance(mcps, dict) and mcps:
+                for sname, scfg in mcps.items():
+                    if not isinstance(scfg, dict) or (not scfg.get("url") and not scfg.get("command")):
+                        errors.append(f".codex-plugin/plugin.json: mcpServers `{sname}` needs a `url` or `command`")
+            else:
+                errors.append(".codex-plugin/plugin.json: `mcpServers` must be a `./` path or a non-empty object")
 
 # Cursor manifest contract (subset of cursor/plugins schemas/*.schema.json).
 CURSOR_NAME_RE = re.compile(r"^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
@@ -167,11 +180,11 @@ if cmp_.exists():
 
 # Bundled MCP server config files (optional). When present they auto-configure
 # the SenderKit MCP server on plugin install, so keep them parseable and
-# well-formed. `.mcp.json` is the Claude Code default (OAuth); Codex points its
-# manifest `mcpServers` path at `.codex-plugin/mcp.json` (also OAuth — `url` only);
-# Cursor inlines `mcpServers` in its plugin manifest (OAuth, `url` only). All ship
-# OAuth-only with no committed credential; API keys are an opt-in per user.
-for rel in (".mcp.json", ".codex-plugin/mcp.json"):
+# well-formed. `.mcp.json` is the Claude Code default (OAuth); Codex and Cursor
+# inline `mcpServers` in their plugin manifests (OAuth, `url` only) — only
+# `plugin.json` may live in `.codex-plugin/`, so Codex gets no companion file.
+# All ship OAuth-only with no committed credential; API keys are an opt-in per user.
+for rel in (".mcp.json",):
     mcp_path = ROOT / rel
     if not mcp_path.exists():
         continue
