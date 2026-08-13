@@ -11,7 +11,12 @@
   "license": "MIT",
   "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk", "email-deliverability", "dkim", "spf", "dmarc", "sender-reputation"],
   "skills": "./skills/",
-  "mcpServers": ".codex-plugin/mcp.json",
+  "mcpServers": {
+    "senderkit": {
+      "type": "http",
+      "url": "https://mcp.senderkit.com"
+    }
+  },
   "interface": {
     "displayName": "SenderKit",
     "shortDescription": "Send email, SMS & push from your AI agent.",
@@ -21,6 +26,8 @@
     "category": "Productivity",
     "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://www.senderkit.com",
+    "privacyPolicyURL": "https://www.senderkit.com/privacy",
+    "termsOfServiceURL": "https://www.senderkit.com/terms",
     "defaultPrompt": [
       "Add a welcome email when a user signs up.",
       "Set up SMS OTP / verification codes in this app.",
