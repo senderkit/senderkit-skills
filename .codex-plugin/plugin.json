@@ -1,5 +1,5 @@
 {
-  "name": "app-6a7de02010d881918ec0113b79108e98",
+  "name": "senderkit",
   "version": "1.0.1",
   "description": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push — welcome emails, OTPs, receipts, and more — then create templates, send, and monitor every message your app sends. One messaging layer, no provider lock-in.",
   "author": {
@@ -14,15 +14,17 @@
   "mcpServers": "./.mcp.json",
   "interface": {
     "displayName": "SenderKit",
-    "shortDescription": "Send email, SMS & push from your AI agent.",
+    "shortDescription": "Email, SMS & push for your app",
     "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.png",
     "longDescription": "Build complete messaging experiences right from your AI coding agent. Add transactional email, SMS, push, and web-push — welcome emails, OTPs, receipts, and more — then create templates, send, and monitor every message your app sends. One messaging layer, no provider lock-in. Wire it into your codebase, or just send and inspect messages live over MCP.",
     "developerName": "SenderKit",
-    "category": "Productivity",
+    "category": "Developer Tools",
     "capabilities": ["Interactive", "Write"],
     "websiteURL": "https://www.senderkit.com",
     "privacyPolicyURL": "https://www.senderkit.com/privacy",
     "termsOfServiceURL": "https://www.senderkit.com/terms",
+    "supportURL": "https://github.com/senderkit/senderkit-skills/issues",
     "defaultPrompt": [
       "Add a welcome email when a user signs up.",
       "Set up SMS OTP / verification codes in this app.",

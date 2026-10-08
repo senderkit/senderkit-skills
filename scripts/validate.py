@@ -88,10 +88,9 @@ if clm.exists():
 
 # Codex manifest contract (subset of openai/codex plugin-json-spec validator).
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+].+)?$")
-# The OpenAI plugin directory listing started life as a ChatGPT app, so the
-# submission portal only accepts uploads whose Codex `name` is that app's id.
-# Users see `interface.displayName` ("SenderKit"), never this id.
-OPENAI_PLUGIN_ID = "app-6a7de02010d881918ec0113b79108e98"
+# The OpenAI plugin directory listing is keyed by the Codex `name`: an upload
+# whose name differs creates a separate plugin. Pin it so it can't drift.
+OPENAI_PLUGIN_ID = "senderkit"
 codex = ROOT / ".codex-plugin" / "plugin.json"
 if codex.exists():
     try:
@@ -122,6 +121,14 @@ if codex.exists():
             errors.append(".codex-plugin/plugin.json: `interface.capabilities` must be a string array")
         if "defaultPrompt" not in iface and "default_prompt" not in iface:
             errors.append(".codex-plugin/plugin.json: `interface.defaultPrompt` is required")
+        # OpenAI plugin submission portal listing rules.
+        if len(str(iface.get("shortDescription", ""))) > 30:
+            errors.append(".codex-plugin/plugin.json: `interface.shortDescription` (listing subtitle) must be 30 characters or fewer")
+        if not str(iface.get("supportURL", "")).startswith("https://"):
+            errors.append(".codex-plugin/plugin.json: `interface.supportURL` (https) is required")
+        logo = str(iface.get("logo", ""))
+        if not logo.startswith("./") or not (ROOT / logo).is_file():
+            errors.append(".codex-plugin/plugin.json: `interface.logo` must be a `./` path to an existing image (app icon)")
         # `mcpServers` must be a `./`-relative path to an MCP config file at the
         # plugin root: the OpenAI plugin submission portal rejects an inline
         # server map ("`mcpServers` must be a string path to an MCP
