@@ -1,6 +1,6 @@
 # SenderKit Email Deliverability Skill
 
-A portable, open-source skill for AI coding agents and LLMs that need transactional email to reach the inbox: diagnose, generate, and verify email domain authentication (SPF, DKIM, DMARC, MX, alignment) for a sending domain. Works whether mail is sent directly via SenderKit or routed through a provider like Resend, SendGrid, Postmark, Mailgun, SES, or SMTP. Uses standard tools (dig/nslookup) — no signup or API key.
+A portable, open-source skill for AI coding agents and LLMs that need transactional email to reach the inbox: diagnose, generate, and verify email domain authentication (SPF, DKIM, DMARC, MX, alignment) for a sending domain. Works whether mail is sent directly via SenderKit or routed through a provider like Resend, SendGrid, Postmark, Mailgun, SES, or SMTP. Its only commands are validated, read-only `dig` lookups of public DNS (no API key or DNS credentials needed), and it never edits DNS.
 
 Canonical GitHub source:
 

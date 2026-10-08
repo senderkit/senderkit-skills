@@ -3,7 +3,7 @@
 You add TXT records wherever the domain's **authoritative DNS** lives — often the registrar, sometimes a separate DNS host (Cloudflare, Route 53). Find it with:
 
 ```bash
-dig +short NS <domain>
+dig +short -t NS -q 'example.com'
 ```
 
 General rules for all hosts:
@@ -14,11 +14,11 @@ General rules for all hosts:
 - **TTL:** default (e.g. 3600) is fine.
 - Some UIs auto-append the domain to the Name — do not double it (avoid `_dmarc.example.com.example.com`).
 
-Host-specific notes (verify against the host's current docs; UIs change):
+Host-specific notes (UIs change; the user follows their DNS host's current UI):
 
 - **Cloudflare:** DNS → Records → Add record. For root SPF/DMARC use `@` / `_dmarc`. Set proxy status to DNS-only (grey cloud); TXT is not proxied anyway.
 - **AWS Route 53:** Hosted zones → Create record → TXT. Enter the full subdomain in *Record name*; wrap each value in double quotes.
 - **GoDaddy / Namecheap:** DNS management → Add → TXT. Host = `@`, `_dmarc`, or `selector._domainkey`.
 - **Google Domains / Squarespace, Vercel, Netlify:** add TXT under the domain's DNS section with the same Name/Value rules.
 
-After adding, confirm with `dig +short TXT <name>` (see verification in SKILL.md). Propagation is typically minutes but can take hours.
+The user makes these changes in their DNS host's UI; this skill never logs in to or calls the DNS host. After the user adds a record, confirm with `dig +short -t TXT -q '<validated name>'` (see verification in SKILL.md). Propagation is typically minutes but can take hours.

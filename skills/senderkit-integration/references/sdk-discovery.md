@@ -24,7 +24,7 @@ The set of official SenderKit SDKs changes over time. **Never assume it from a s
    | Ruby | RubyGems `senderkit` | owner SenderKit |
    | Go | `github.com/senderkit/*` | org `senderkit` |
 
-   Treat a package as official **only** when it is published under the SenderKit org/account (repo under `github.com/senderkit/…`). If ownership is unclear, do not install it — use REST.
+   Treat a package as official **only** when it is published under the SenderKit org/account (repo under `github.com/senderkit/...`). If ownership is unclear, do not install it — use REST.
 
 5. **No official SDK anywhere** — or you are deliberately avoiding a dependency (e.g. an edge runtime) — use the REST API (`examples.md`). Note in the implementation summary that no SDK was used and why.
 

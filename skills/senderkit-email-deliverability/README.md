@@ -7,10 +7,11 @@ This open-source skill lives in the [`senderkit/senderkit-skills`](https://githu
 ## What it does
 
 - Identifies the sending domain and the records that must exist.
-- Diagnoses current SPF, DKIM, DMARC, MX, and alignment with `dig`/`nslookup`.
+- Diagnoses current SPF, DKIM, DMARC, MX, and alignment with `dig`.
 - Generates the exact DNS records to add (one merged SPF record, DKIM as issued by SenderKit, a DMARC record starting at `p=none`).
 - Points to the SenderKit dashboard for issued values (DKIM selector/key, verification token).
 - Verifies publication and sets realistic propagation expectations; optional manual validators.
+- Stays read-only: validated `dig -q` lookups only; DNS answers are treated as untrusted data; never edits DNS or handles private keys or credentials.
 
 ## Contents
 
@@ -64,7 +65,7 @@ Add `senderkit-skills/skills/senderkit-email-deliverability/` to your repository
 ## Related skills
 
 - `senderkit-integration` — wire sends into the codebase (From domain, headers).
-- `senderkit-mcp-messaging-operations` — send a live test and confirm inbox placement.
+- `senderkit-mcp-messaging-operations` — send a live test message (with the user's confirmation).
 
 ## Reuse and distribution
 

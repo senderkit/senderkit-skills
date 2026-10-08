@@ -28,7 +28,7 @@ This skill **writes SenderKit into the application's code**. To operate SenderKi
    - If network access is unavailable, use the repo's `public/openapi.yaml` when present and clearly note that the live contract was not checked.
 
 3. Choose the integration path — discover the SDK, do not assume it.
-   - The set of official SDKs changes over time, so resolve it at integration time rather than trusting a fixed list. Follow `references/sdk-discovery.md`: read the live docs index (`https://docs.senderkit.com/llms.txt`, or run `scripts/list_sdks.py`), match the detected stack, and install that SDK. If the index has no entry for the language, check its package registry (npm/PyPI/Packagist/…) for an official SenderKit package before REST.
+   - The set of official SDKs changes over time, so resolve it at integration time rather than trusting a fixed list. Follow `references/sdk-discovery.md`: read the live docs index (`https://docs.senderkit.com/llms.txt`, or run `scripts/list_sdks.py`), match the detected stack, and install that SDK. If the index has no entry for the language, check its package registry (npm/PyPI/Packagist/...) for an official SenderKit package before REST.
    - Use the REST API only when no official SDK exists for the stack, you are deliberately avoiding a dependency (e.g. edge runtimes), or a lookup shows the package was renamed or yanked. Not being able to reach the index/registry is **not** a reason to fall back — install the SDK named in the `sdk-discovery.md` cache and note the version was not live-checked. See `references/examples.md` for both SDK and REST snippets.
    - Keep the old provider until parity is verified; do not remove working delivery code as the first step.
 
