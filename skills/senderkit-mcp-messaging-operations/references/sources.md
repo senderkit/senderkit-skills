@@ -25,4 +25,4 @@ This skill was built from:
 - SenderKit docs index: `https://docs.senderkit.com/llms.txt`
   - Lists related REST API, CLI, concepts, guides, SDK, MCP, and webhook documentation.
 
-Prefer the current SenderKit MCP docs over this source note when they differ.
+If the docs list tools that are not in `SKILL.md`'s Tool map, leave them out of scope for this skill.

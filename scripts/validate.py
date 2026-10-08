@@ -88,6 +88,9 @@ if clm.exists():
 
 # Codex manifest contract (subset of openai/codex plugin-json-spec validator).
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+].+)?$")
+# The OpenAI plugin directory listing is keyed by the Codex `name`: an upload
+# whose name differs creates a separate plugin. Pin it so it can't drift.
+OPENAI_PLUGIN_ID = "senderkit"
 codex = ROOT / ".codex-plugin" / "plugin.json"
 if codex.exists():
     try:
@@ -95,6 +98,8 @@ if codex.exists():
     except json.JSONDecodeError:
         cx = None
     if cx is not None:
+        if cx.get("name") != OPENAI_PLUGIN_ID:
+            errors.append(f".codex-plugin/plugin.json: `name` must be the OpenAI directory id `{OPENAI_PLUGIN_ID}` (the submission portal rejects anything else)")
         allowed_top = {"id", "name", "version", "description", "skills", "apps",
                        "mcpServers", "interface", "author", "homepage", "repository",
                        "license", "keywords"}
@@ -116,19 +121,26 @@ if codex.exists():
             errors.append(".codex-plugin/plugin.json: `interface.capabilities` must be a string array")
         if "defaultPrompt" not in iface and "default_prompt" not in iface:
             errors.append(".codex-plugin/plugin.json: `interface.defaultPrompt` is required")
-        # `mcpServers` is a `./`-relative companion-file path or an inline
-        # server map (openai/codex plugin-json-spec allows both).
+        # OpenAI plugin submission portal listing rules.
+        if len(str(iface.get("shortDescription", ""))) > 30:
+            errors.append(".codex-plugin/plugin.json: `interface.shortDescription` (listing subtitle) must be 30 characters or fewer")
+        if not str(iface.get("supportURL", "")).startswith("https://"):
+            errors.append(".codex-plugin/plugin.json: `interface.supportURL` (https) is required")
+        logo = str(iface.get("logo", ""))
+        if not logo.startswith("./") or not (ROOT / logo).is_file():
+            errors.append(".codex-plugin/plugin.json: `interface.logo` must be a `./` path to an existing image (app icon)")
+        # `mcpServers` must be a `./`-relative path to an MCP config file at the
+        # plugin root: the OpenAI plugin submission portal rejects an inline
+        # server map ("`mcpServers` must be a string path to an MCP
+        # configuration file"). The file itself is checked below.
         mcps = cx.get("mcpServers")
         if mcps is not None:
-            if isinstance(mcps, str):
-                if not mcps.startswith("./"):
-                    errors.append(".codex-plugin/plugin.json: `mcpServers` path must start with `./`")
-            elif isinstance(mcps, dict) and mcps:
-                for sname, scfg in mcps.items():
-                    if not isinstance(scfg, dict) or (not scfg.get("url") and not scfg.get("command")):
-                        errors.append(f".codex-plugin/plugin.json: mcpServers `{sname}` needs a `url` or `command`")
-            else:
-                errors.append(".codex-plugin/plugin.json: `mcpServers` must be a `./` path or a non-empty object")
+            if not isinstance(mcps, str) or not mcps.startswith("./"):
+                errors.append(".codex-plugin/plugin.json: `mcpServers` must be a `./` path to an MCP config file")
+            elif mcps.startswith("./.codex-plugin/"):
+                errors.append(".codex-plugin/plugin.json: `mcpServers` file must live at the plugin root, not in .codex-plugin/")
+            elif not (ROOT / mcps).is_file():
+                errors.append(f".codex-plugin/plugin.json: `mcpServers` points to missing file `{mcps}`")
 
 # Cursor manifest contract (subset of cursor/plugins schemas/*.schema.json).
 CURSOR_NAME_RE = re.compile(r"^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
@@ -180,10 +192,10 @@ if cmp_.exists():
 
 # Bundled MCP server config files (optional). When present they auto-configure
 # the SenderKit MCP server on plugin install, so keep them parseable and
-# well-formed. `.mcp.json` is the Claude Code default (OAuth); Codex and Cursor
-# inline `mcpServers` in their plugin manifests (OAuth, `url` only) — only
-# `plugin.json` may live in `.codex-plugin/`, so Codex gets no companion file.
-# All ship OAuth-only with no committed credential; API keys are an opt-in per user.
+# well-formed. `.mcp.json` is shared by Claude Code (auto-loaded) and Codex
+# (`mcpServers: "./.mcp.json"`, the same shape OpenAI's own plugins use: no
+# `$schema`, `type: http`); Cursor inlines `mcpServers` in its manifest. All ship
+# OAuth-only with no committed credential; API keys are an opt-in per user.
 for rel in (".mcp.json",):
     mcp_path = ROOT / rel
     if not mcp_path.exists():
@@ -204,6 +216,9 @@ for rel in (".mcp.json",):
         # Remote (url) or local (command) — require one of them.
         if not scfg.get("url") and not scfg.get("command"):
             errors.append(f"{rel}: server `{sname}` needs a `url` or `command`")
+    # The OpenAI submission portal rejects unknown top-level keys (e.g. `$schema`).
+    if set(mcp) != {"mcpServers"}:
+        errors.append(f"{rel}: only a top-level `mcpServers` key is allowed")
 
 # opencode config (optional). opencode has no plugin manifest; the root
 # `opencode.json` is its auto-loaded project config (analog to Claude's
