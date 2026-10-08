@@ -8,7 +8,7 @@ Likely causes, in order:
 1. No DMARC, or DMARC fails because nothing aligns. Check `dig +short -t TXT -q '_dmarc.example.com'` and alignment (see spf-dkim-dmarc.md). Fix: publish aligned DKIM and a DMARC record.
 2. DKIM not published / wrong selector. Check `dig +short -t TXT -q 'selector._domainkey.example.com'`. Fix: add the exact SenderKit DKIM record.
 3. SPF missing, duplicated, or `permerror` (>10 lookups). Check `dig +short -t TXT -q 'example.com'`. Fix: one merged SPF record within the lookup limit.
-4. Content/reputation: new domain with no history, misleading content, no `List-Unsubscribe`. Fix: ramp volume gradually, send only mail recipients asked for, add unsubscribe headers.
+4. Content/reputation: new domain with no history, misleading content, no `List-Unsubscribe`. Fix: send only mail recipients asked for, keep volume in line with real user activity, add unsubscribe headers.
 
 ## "Emails are not arriving at all"
 

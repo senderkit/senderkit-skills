@@ -7,7 +7,7 @@ This open-source skill lives in the [`senderkit/senderkit-skills`](https://githu
 ## What it does
 
 - Confirms whether the SenderKit MCP connection is in test or live mode.
-- Sends registered SenderKit templates with variables, metadata, scheduling, idempotency, and email-only options.
+- Sends registered SenderKit templates with variables, metadata, scheduling, and idempotency, after the user confirms each send.
 - Sends raw one-off email, SMS, push, or web-push content when explicitly requested.
 - Lists and inspects templates before using uncertain slugs.
 - Lists, filters, and inspects messages for status or delivery debugging.
@@ -76,7 +76,7 @@ Prefer to wire it up manually, or use another client (Windsurf, VS Code, Zed, Cl
 The SenderKit CLI writes the correct config per client:
 
 ```bash
-senderkit mcp install --client cursor   # or codex, claude-code, vscode, zed, all
+senderkit mcp install --client cursor   # or codex, claude-code, vscode, zed
 ```
 
 A local stdio server (`senderkit mcp`, no network hop) is also available for offline use; see
