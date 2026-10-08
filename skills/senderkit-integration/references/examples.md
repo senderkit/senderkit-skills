@@ -40,7 +40,7 @@ curl -sS -X POST https://api.senderkit.com/v1/send \
     "vars": { "name": "Ada" },
     "metadata": { "userId": "usr_123" }
   }'
-# -> 202 { "id": "msg_…", "status": "queued", "livemode": false }
+# -> 202 { "id": "msg_...", "status": "queued", "livemode": false }
 
 # Read status later
 curl -sS https://api.senderkit.com/v1/messages/msg_123 \
@@ -98,7 +98,7 @@ auto-generated idempotency keys, and framework extras (`senderkit[django]`,
 import os
 from senderkit import SenderKit
 
-sk = SenderKit(api_key=os.environ["SENDERKIT_API_KEY"])  # sk_live_… or sk_test_…
+sk = SenderKit(api_key=os.environ["SENDERKIT_API_KEY"])  # sk_live_... or sk_test_...
 
 result = sk.send(
     "welcome",               # template slug
@@ -107,7 +107,7 @@ result = sk.send(
     metadata={"user_id": "usr_123"},
 )
 
-result.id       # "msg_…"
+result.id       # "msg_..."
 result.status   # "queued" | "scheduled"
 
 message = sk.messages.get("msg_123")  # read status later
@@ -134,7 +134,7 @@ resp = httpx.post(
     timeout=10.0,
 )
 resp.raise_for_status()
-message = resp.json()  # {"id": "msg_…", "status": "queued", "livemode": False}
+message = resp.json()  # {"id": "msg_...", "status": "queued", "livemode": False}
 ```
 
 ## PHP
@@ -147,7 +147,7 @@ idempotency key and picks up any installed PSR-18 client (Guzzle, `symfony/http-
 use SenderKit\Client;
 use SenderKit\Request\TemplateSend;
 
-$sk = new Client(apiKey: getenv("SENDERKIT_API_KEY")); // sk_live_… or sk_test_…
+$sk = new Client(apiKey: getenv("SENDERKIT_API_KEY")); // sk_live_... or sk_test_...
 
 $result = $sk->send(new TemplateSend(
     template: "welcome",
@@ -157,7 +157,7 @@ $result = $sk->send(new TemplateSend(
     idempotencyKey: "welcome:usr_123", // optional; omit and the SDK generates one
 ));
 
-$result->id;     // "msg_…"
+$result->id;     // "msg_..."
 $result->status; // "queued" | "scheduled"
 ```
 
@@ -193,7 +193,7 @@ curl_close($ch);
 if ($status >= 400) {
     throw new RuntimeException("SenderKit error $status: $body");
 }
-$message = json_decode($body, true); // ["id" => "msg_…", "status" => "queued", ...]
+$message = json_decode($body, true); // ["id" => "msg_...", "status" => "queued", ...]
 ```
 
 ## Ruby
@@ -218,7 +218,7 @@ req.body = {
 res = Net::HTTP.start(uri.hostname, uri.port, use_ssl: true) { |http| http.request(req) }
 raise "SenderKit error #{res.code}: #{res.body}" if res.code.to_i >= 400
 
-message = JSON.parse(res.body) # {"id"=>"msg_…", "status"=>"queued", "livemode"=>false}
+message = JSON.parse(res.body) # {"id"=>"msg_...", "status"=>"queued", "livemode"=>false}
 ```
 
 ## Go
