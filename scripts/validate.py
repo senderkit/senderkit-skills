@@ -88,6 +88,10 @@ if clm.exists():
 
 # Codex manifest contract (subset of openai/codex plugin-json-spec validator).
 SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+(?:[-+].+)?$")
+# The OpenAI plugin directory listing started life as a ChatGPT app, so the
+# submission portal only accepts uploads whose Codex `name` is that app's id.
+# Users see `interface.displayName` ("SenderKit"), never this id.
+OPENAI_PLUGIN_ID = "app-6a7de02010d881918ec0113b79108e98"
 codex = ROOT / ".codex-plugin" / "plugin.json"
 if codex.exists():
     try:
@@ -95,6 +99,8 @@ if codex.exists():
     except json.JSONDecodeError:
         cx = None
     if cx is not None:
+        if cx.get("name") != OPENAI_PLUGIN_ID:
+            errors.append(f".codex-plugin/plugin.json: `name` must be the OpenAI directory id `{OPENAI_PLUGIN_ID}` (the submission portal rejects anything else)")
         allowed_top = {"id", "name", "version", "description", "skills", "apps",
                        "mcpServers", "interface", "author", "homepage", "repository",
                        "license", "keywords"}
