@@ -116,19 +116,18 @@ if codex.exists():
             errors.append(".codex-plugin/plugin.json: `interface.capabilities` must be a string array")
         if "defaultPrompt" not in iface and "default_prompt" not in iface:
             errors.append(".codex-plugin/plugin.json: `interface.defaultPrompt` is required")
-        # `mcpServers` is a `./`-relative companion-file path or an inline
-        # server map (openai/codex plugin-json-spec allows both).
+        # `mcpServers` must be a `./`-relative path to an MCP config file at the
+        # plugin root: the OpenAI plugin submission portal rejects an inline
+        # server map ("`mcpServers` must be a string path to an MCP
+        # configuration file"). The file itself is checked below.
         mcps = cx.get("mcpServers")
         if mcps is not None:
-            if isinstance(mcps, str):
-                if not mcps.startswith("./"):
-                    errors.append(".codex-plugin/plugin.json: `mcpServers` path must start with `./`")
-            elif isinstance(mcps, dict) and mcps:
-                for sname, scfg in mcps.items():
-                    if not isinstance(scfg, dict) or (not scfg.get("url") and not scfg.get("command")):
-                        errors.append(f".codex-plugin/plugin.json: mcpServers `{sname}` needs a `url` or `command`")
-            else:
-                errors.append(".codex-plugin/plugin.json: `mcpServers` must be a `./` path or a non-empty object")
+            if not isinstance(mcps, str) or not mcps.startswith("./"):
+                errors.append(".codex-plugin/plugin.json: `mcpServers` must be a `./` path to an MCP config file")
+            elif mcps.startswith("./.codex-plugin/"):
+                errors.append(".codex-plugin/plugin.json: `mcpServers` file must live at the plugin root, not in .codex-plugin/")
+            elif not (ROOT / mcps).is_file():
+                errors.append(f".codex-plugin/plugin.json: `mcpServers` points to missing file `{mcps}`")
 
 # Cursor manifest contract (subset of cursor/plugins schemas/*.schema.json).
 CURSOR_NAME_RE = re.compile(r"^[a-z0-9]([a-z0-9.-]*[a-z0-9])?$")
@@ -178,13 +177,19 @@ if cmp_.exists():
                 if e.get("source") == "." and cur_name and e.get("name") != cur_name:
                     errors.append(f".cursor-plugin/marketplace.json: entry name `{e.get('name')}` must match plugin.json name `{cur_name}`")
 
+# Portable MCP config (agent-plugins.org/schemas/1.0.0/mcp.schema.json): requires
+# `$schema` and a transport `type` per server; `http` is NOT a valid value there.
+AGENT_PLUGINS_MCP_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
+AGENT_PLUGINS_MCP_TYPES = {"stdio", "streamable-http", "sse"}
+
 # Bundled MCP server config files (optional). When present they auto-configure
 # the SenderKit MCP server on plugin install, so keep them parseable and
-# well-formed. `.mcp.json` is the Claude Code default (OAuth); Codex and Cursor
-# inline `mcpServers` in their plugin manifests (OAuth, `url` only) — only
-# `plugin.json` may live in `.codex-plugin/`, so Codex gets no companion file.
-# All ship OAuth-only with no committed credential; API keys are an opt-in per user.
-for rel in (".mcp.json",):
+# well-formed. `.mcp.json` is the Claude Code default (OAuth, `type: http`);
+# `mcp.json` is the portable Agent Plugins file the Codex manifest points to
+# (checked against that schema below); Cursor inlines `mcpServers` in its
+# manifest. All ship OAuth-only with no committed credential; API keys are an
+# opt-in per user.
+for rel in (".mcp.json", "mcp.json"):
     mcp_path = ROOT / rel
     if not mcp_path.exists():
         continue
@@ -204,6 +209,10 @@ for rel in (".mcp.json",):
         # Remote (url) or local (command) — require one of them.
         if not scfg.get("url") and not scfg.get("command"):
             errors.append(f"{rel}: server `{sname}` needs a `url` or `command`")
+        if rel == "mcp.json" and scfg.get("type") not in AGENT_PLUGINS_MCP_TYPES:
+            errors.append(f"{rel}: server `{sname}` `type` must be one of {sorted(AGENT_PLUGINS_MCP_TYPES)}")
+    if rel == "mcp.json" and mcp.get("$schema") != AGENT_PLUGINS_MCP_SCHEMA:
+        errors.append(f"{rel}: `$schema` must be {AGENT_PLUGINS_MCP_SCHEMA}")
 
 # opencode config (optional). opencode has no plugin manifest; the root
 # `opencode.json` is its auto-loaded project config (analog to Claude's

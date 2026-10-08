@@ -11,12 +11,7 @@
   "license": "MIT",
   "keywords": ["senderkit", "transactional-email", "transactional-messaging", "email", "email-api", "send-email", "sms", "push-notifications", "web-push", "notifications", "notification-system", "otp", "verification-code", "magic-link", "password-reset-email", "receipts", "resend-alternative", "sendgrid-alternative", "postmark-alternative", "twilio-alternative", "mailgun", "ses", "smtp", "fcm", "apns", "expo", "mcp", "email-sdk", "email-deliverability", "dkim", "spf", "dmarc", "sender-reputation"],
   "skills": "./skills/",
-  "mcpServers": {
-    "senderkit": {
-      "type": "http",
-      "url": "https://mcp.senderkit.com"
-    }
-  },
+  "mcpServers": "./mcp.json",
   "interface": {
     "displayName": "SenderKit",
     "shortDescription": "Send email, SMS & push from your AI agent.",
