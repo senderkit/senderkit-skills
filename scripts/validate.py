@@ -177,19 +177,13 @@ if cmp_.exists():
                 if e.get("source") == "." and cur_name and e.get("name") != cur_name:
                     errors.append(f".cursor-plugin/marketplace.json: entry name `{e.get('name')}` must match plugin.json name `{cur_name}`")
 
-# Portable MCP config (agent-plugins.org/schemas/1.0.0/mcp.schema.json): requires
-# `$schema` and a transport `type` per server; `http` is NOT a valid value there.
-AGENT_PLUGINS_MCP_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/mcp.schema.json"
-AGENT_PLUGINS_MCP_TYPES = {"stdio", "streamable-http", "sse"}
-
 # Bundled MCP server config files (optional). When present they auto-configure
 # the SenderKit MCP server on plugin install, so keep them parseable and
-# well-formed. `.mcp.json` is the Claude Code default (OAuth, `type: http`);
-# `mcp.json` is the portable Agent Plugins file the Codex manifest points to
-# (checked against that schema below); Cursor inlines `mcpServers` in its
-# manifest. All ship OAuth-only with no committed credential; API keys are an
-# opt-in per user.
-for rel in (".mcp.json", "mcp.json"):
+# well-formed. `.mcp.json` is shared by Claude Code (auto-loaded) and Codex
+# (`mcpServers: "./.mcp.json"`, the same shape OpenAI's own plugins use: no
+# `$schema`, `type: http`); Cursor inlines `mcpServers` in its manifest. All ship
+# OAuth-only with no committed credential; API keys are an opt-in per user.
+for rel in (".mcp.json",):
     mcp_path = ROOT / rel
     if not mcp_path.exists():
         continue
@@ -209,10 +203,9 @@ for rel in (".mcp.json", "mcp.json"):
         # Remote (url) or local (command) — require one of them.
         if not scfg.get("url") and not scfg.get("command"):
             errors.append(f"{rel}: server `{sname}` needs a `url` or `command`")
-        if rel == "mcp.json" and scfg.get("type") not in AGENT_PLUGINS_MCP_TYPES:
-            errors.append(f"{rel}: server `{sname}` `type` must be one of {sorted(AGENT_PLUGINS_MCP_TYPES)}")
-    if rel == "mcp.json" and mcp.get("$schema") != AGENT_PLUGINS_MCP_SCHEMA:
-        errors.append(f"{rel}: `$schema` must be {AGENT_PLUGINS_MCP_SCHEMA}")
+    # The OpenAI submission portal rejects unknown top-level keys (e.g. `$schema`).
+    if set(mcp) != {"mcpServers"}:
+        errors.append(f"{rel}: only a top-level `mcpServers` key is allowed")
 
 # opencode config (optional). opencode has no plugin manifest; the root
 # `opencode.json` is its auto-loaded project config (analog to Claude's

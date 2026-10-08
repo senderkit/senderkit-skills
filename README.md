@@ -80,7 +80,7 @@ cp -R senderkit-skills/skills/senderkit-mcp-messaging-operations ~/.agents/skill
 # repo-scoped instead? copy into <your-repo>/.agents/skills/
 ```
 
-Restart Codex so it picks them up. Connect MCP: the bundled root `mcp.json` (referenced from `.codex-plugin/plugin.json`) points Codex at `https://mcp.senderkit.com` over OAuth — run `codex mcp login senderkit` to sign in (no key stored). Prefer an API key? See [API key (optional)](#api-key-optional) below, or run `senderkit mcp install --client codex`.
+Restart Codex so it picks them up. Connect MCP: the bundled `.mcp.json` (referenced from `.codex-plugin/plugin.json`) points Codex at `https://mcp.senderkit.com` over OAuth — run `codex mcp login senderkit` to sign in (no key stored). Prefer an API key? See [API key (optional)](#api-key-optional) below, or run `senderkit mcp install --client codex`.
 
 **Check it works:** run `/skills` (the SenderKit skills should be listed) or invoke one explicitly with `$senderkit-integration`.
 
@@ -124,7 +124,7 @@ Installing the plugin/skills gives you the `senderkit_*` MCP tools. Auth differs
 
 - **Claude Code** — OAuth via the repo's `.mcp.json`. Run `/mcp`, sign in, pick a workspace and test/live mode. **No API key is stored in the repo.**
 - **Cursor** — OAuth via the bundled `.cursor-plugin/plugin.json`. Toggle the server under Settings → MCP and sign in. **No API key is stored in the repo.**
-- **Codex** — OAuth via the bundled root `mcp.json`. Run `codex mcp login senderkit` to sign in. **No API key is stored in the repo.**
+- **Codex** — OAuth via the bundled `.mcp.json`. Run `codex mcp login senderkit` to sign in. **No API key is stored in the repo.**
 - **opencode** — OAuth via the bundled `opencode.json` (`"type": "remote"`, `url` only). Run `opencode mcp auth senderkit` to sign in. **No API key is stored in the repo.**
 
 #### API key (optional)
@@ -216,7 +216,6 @@ senderkit-skills/
 |       `-- hol-scanner.yml
 |-- .codexignore
 |-- .mcp.json
-|-- mcp.json
 |-- opencode.json
 |-- AGENTS.md
 |-- LICENSE
